@@ -8,5 +8,7 @@ import java.util.*
 data class WorkoutSession(
     @PrimaryKey(autoGenerate = true) val id: Long,
     var title: String,
-    val date: Date
+    val date: Date,
+    val duration: Int,
+    val distance: Double
 )
