@@ -1,4 +1,4 @@
-package com.runningtechie.transparentrunning
+package com.runningtechie.transparentrunning.database
 
 import androidx.room.TypeConverter
 import java.util.*

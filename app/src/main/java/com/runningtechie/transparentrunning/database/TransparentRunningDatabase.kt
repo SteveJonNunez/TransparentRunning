@@ -1,10 +1,11 @@
-package com.runningtechie.transparentrunning
+package com.runningtechie.transparentrunning.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.runningtechie.transparentrunning.enitity.LocationPoint
-import com.runningtechie.transparentrunning.enitity.WorkoutSession
+import com.runningtechie.transparentrunning.database.TransparentRunningConverters
+import com.runningtechie.transparentrunning.model.LocationPoint
+import com.runningtechie.transparentrunning.model.WorkoutSession
 
 @Database(entities = [WorkoutSession::class, LocationPoint::class], version = 1)
 @TypeConverters(TransparentRunningConverters::class)

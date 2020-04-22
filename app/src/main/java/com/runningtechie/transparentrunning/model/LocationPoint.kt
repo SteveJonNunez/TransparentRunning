@@ -1,4 +1,4 @@
-package com.runningtechie.transparentrunning.enitity
+package com.runningtechie.transparentrunning.model
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
