@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(
+    tableName = "LocationPoint",
     foreignKeys = [ForeignKey(
         entity = WorkoutSession::class,
         parentColumns = arrayOf("id"),

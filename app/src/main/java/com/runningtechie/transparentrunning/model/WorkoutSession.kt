@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
 
-@Entity
+@Entity(tableName = "WorkoutSession")
 data class WorkoutSession(
     @PrimaryKey(autoGenerate = true) val id: Long,
     var title: String,
