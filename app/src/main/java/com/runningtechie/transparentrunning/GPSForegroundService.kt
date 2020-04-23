@@ -28,7 +28,8 @@ class GPSForegroundService : Service() {
     private lateinit var serviceLooper: Looper
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
-    private lateinit var locationRequest: LocationRequest
+    private lateinit var ongoingLocationRequest: LocationRequest
+    private lateinit var singleLocationRequest: LocationRequest
     private lateinit var notificationBuilder: NotificationCompat.Builder
 
     private val pauseStartActionIndex = 0
@@ -41,7 +42,8 @@ class GPSForegroundService : Service() {
         initializeFusedLocationClient()
         initializeLocationCallback()
         initializeServiceLooper()
-        initializeLocationRequest()
+        initializeOngoingLocationRequest()
+        initializeSinglegLocationRequest()
     }
 
 
@@ -103,10 +105,16 @@ class GPSForegroundService : Service() {
         }
     }
 
-    private fun initializeLocationRequest() {
-        locationRequest = LocationRequest.create()
-        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationRequest.interval = 10 * 1000
+    private fun initializeOngoingLocationRequest() {
+        ongoingLocationRequest = LocationRequest.create()
+        ongoingLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        ongoingLocationRequest.interval = 10 * 1000
+    }
+
+    private fun initializeSinglegLocationRequest() {
+        ongoingLocationRequest = LocationRequest.create()
+        ongoingLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        ongoingLocationRequest.numUpdates = 1
     }
 
     private fun createNotificationChannel(): String {
@@ -172,18 +180,14 @@ class GPSForegroundService : Service() {
             NotificationCompat.Action(android.R.drawable.ic_media_pause, "Pause", pendingFinishIntent)
         notificationBuilder.addAction(finishAction)
 
-        fusedLocationClient.requestLocationUpdates(
-            locationRequest,
-            locationCallback,
-            serviceLooper
-        )
+        startOngoingLocationUpdates()
 
         // Start foreground service.
         startForeground(CHANNEL_ID_INT, notificationBuilder.build())
     }
 
     private fun stopForegroundService() {
-        fusedLocationClient.removeLocationUpdates(locationCallback)
+        stopOngoingLocationUpdates()
         stopForeground(true)
         stopSelf()
     }
@@ -198,12 +202,7 @@ class GPSForegroundService : Service() {
         notificationBuilder.mActions[pauseStartActionIndex] = pauseAction
 
         NotificationManagerCompat.from(this).notify(CHANNEL_ID_INT, notificationBuilder.build())
-        fusedLocationClient.requestLocationUpdates(
-            locationRequest,
-            locationCallback,
-            Looper.getMainLooper()
-        )
-        Toast.makeText(applicationContext, "You click Play button.", Toast.LENGTH_SHORT).show()
+        startOngoingLocationUpdates()
     }
 
     @SuppressLint("RestrictedApi")
@@ -216,8 +215,20 @@ class GPSForegroundService : Service() {
         notificationBuilder.mActions[pauseStartActionIndex] = playAction
         NotificationManagerCompat.from(this).notify(CHANNEL_ID_INT, notificationBuilder.build())
 
+        stopOngoingLocationUpdates()
+    }
+
+    private fun startOngoingLocationUpdates() {
+        fusedLocationClient.requestLocationUpdates(
+            ongoingLocationRequest,
+            locationCallback,
+            serviceLooper
+        )
+    }
+
+    private fun stopOngoingLocationUpdates() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
-        Toast.makeText(applicationContext, "You click Pause button.", Toast.LENGTH_SHORT).show()
+        fusedLocationClient.requestLocationUpdates(singleLocationRequest, locationCallback, serviceLooper)
     }
 
 }
