@@ -5,7 +5,7 @@ import androidx.room.Query
 import com.runningtechie.transparentrunning.model.WorkoutSession
 
 @Dao
-interface WorkoutSessionDao {
+interface WorkoutSessionDao: BaseDao<WorkoutSession> {
 
     @Query("SELECT * FROM WorkoutSession")
     fun getAllWorkoutSessions(): List<WorkoutSession>

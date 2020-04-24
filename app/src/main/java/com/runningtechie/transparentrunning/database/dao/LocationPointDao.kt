@@ -5,7 +5,7 @@ import androidx.room.Query
 import com.runningtechie.transparentrunning.model.LocationPoint
 
 @Dao
-interface LocationPointDao {
+interface LocationPointDao: BaseDao<LocationPoint> {
     @Query("SELECT * from LocationPoint")
     fun getAllLocationPoints(): List<LocationPoint>
 
