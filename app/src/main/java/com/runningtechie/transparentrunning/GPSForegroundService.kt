@@ -1,5 +1,6 @@
 package com.runningtechie.transparentrunning
 
+import android.R
 import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
@@ -144,9 +145,15 @@ class GPSForegroundService : Service() {
 
     @SuppressLint("RestrictedApi")
     private fun startForegroundService() {
-        // Create notification default intent.
-        val intent = Intent(this, MainActivity::class.java)
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+        setupOngoingNotification()
+
+        startOngoingLocationUpdates()
+
+        // Start foreground service.
+        startForeground(CHANNEL_ID_INT, notificationBuilder.build())
+    }
+
+    private fun setupOngoingNotification() {
         val channelId: String = createNotificationChannel()
         notificationBuilder = NotificationCompat.Builder(this, channelId)
 
@@ -160,8 +167,12 @@ class GPSForegroundService : Service() {
         notificationBuilder.setContentText("Content Text")
         notificationBuilder.setSubText("Sub text")
 
-        notificationBuilder.setSmallIcon(android.R.mipmap.sym_def_app_icon)
+        notificationBuilder.setSmallIcon(R.mipmap.sym_def_app_icon)
         notificationBuilder.priority = NotificationCompat.PRIORITY_HIGH
+
+        // Create notification default intent.
+        val intent = Intent(this, MainActivity::class.java)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
         notificationBuilder.setFullScreenIntent(pendingIntent, true)
 
         // Add Pause button intent in notification.
@@ -169,7 +180,7 @@ class GPSForegroundService : Service() {
         pauseIntent.action = ACTION_PAUSE_GPS_FOREGROUND_SERVICE
         val pendingPauseIntent = PendingIntent.getService(this, 0, pauseIntent, 0)
         val pauseAction =
-            NotificationCompat.Action(android.R.drawable.ic_media_play, "Pause", pendingPauseIntent)
+            NotificationCompat.Action(R.drawable.ic_media_play, "Pause", pendingPauseIntent)
         notificationBuilder.addAction(pauseAction)
 
         // Add Finish button intent in notification.
@@ -177,13 +188,8 @@ class GPSForegroundService : Service() {
         finishIntent.action = ACTION_FINISH_GPS_FOREGROUND_SERVICE
         val pendingFinishIntent = PendingIntent.getService(this, 0, finishIntent, 0)
         val finishAction =
-            NotificationCompat.Action(android.R.drawable.ic_media_pause, "Pause", pendingFinishIntent)
+            NotificationCompat.Action(R.drawable.ic_media_pause, "Pause", pendingFinishIntent)
         notificationBuilder.addAction(finishAction)
-
-        startOngoingLocationUpdates()
-
-        // Start foreground service.
-        startForeground(CHANNEL_ID_INT, notificationBuilder.build())
     }
 
     private fun stopForegroundService() {
@@ -192,30 +198,38 @@ class GPSForegroundService : Service() {
         stopSelf()
     }
 
-    @SuppressLint("RestrictedApi")
     private fun play() {
-        val pauseIntent = Intent(this, GPSForegroundService::class.java)
-        pauseIntent.action = ACTION_PAUSE_GPS_FOREGROUND_SERVICE
-        val pendingPauseIntent = PendingIntent.getService(this, 0, pauseIntent, 0)
-        val pauseAction =
-            NotificationCompat.Action(android.R.drawable.ic_media_pause, "Pause", pendingPauseIntent)
-        notificationBuilder.mActions[pauseStartActionIndex] = pauseAction
+        changeNotificationButtonFromPlayToPause()
 
         NotificationManagerCompat.from(this).notify(CHANNEL_ID_INT, notificationBuilder.build())
         startOngoingLocationUpdates()
     }
 
-    @SuppressLint("RestrictedApi")
     private fun pause() {
+        changeNotificationFromPauseToPlay()
+
+        stopOngoingLocationUpdates()
+    }
+
+    @SuppressLint("RestrictedApi")
+    private fun changeNotificationButtonFromPlayToPause() {
+        val pauseIntent = Intent(this, GPSForegroundService::class.java)
+        pauseIntent.action = ACTION_PAUSE_GPS_FOREGROUND_SERVICE
+        val pendingPauseIntent = PendingIntent.getService(this, 0, pauseIntent, 0)
+        val pauseAction =
+            NotificationCompat.Action(R.drawable.ic_media_pause, "Pause", pendingPauseIntent)
+        notificationBuilder.mActions[pauseStartActionIndex] = pauseAction
+    }
+
+    @SuppressLint("RestrictedApi")
+    private fun changeNotificationFromPauseToPlay() {
         val playIntent = Intent(this, GPSForegroundService::class.java)
         playIntent.action = ACTION_PLAY_GPS_FOREGROUND_SERVICE
         val pendingPlayIntent = PendingIntent.getService(this, 0, playIntent, 0)
         val playAction =
-            NotificationCompat.Action(android.R.drawable.ic_media_play, "Play", pendingPlayIntent)
+            NotificationCompat.Action(R.drawable.ic_media_play, "Play", pendingPlayIntent)
         notificationBuilder.mActions[pauseStartActionIndex] = playAction
         NotificationManagerCompat.from(this).notify(CHANNEL_ID_INT, notificationBuilder.build())
-
-        stopOngoingLocationUpdates()
     }
 
     private fun startOngoingLocationUpdates() {
