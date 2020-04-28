@@ -6,9 +6,9 @@ import java.util.*
 
 @Entity(tableName = "WorkoutSession")
 data class WorkoutSession(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey(autoGenerate = true) val id: Long? = null,
     var title: String,
     val date: Date,
-    val duration: Int,
-    val distance: Double
+    val duration: Int? = null,
+    val distance: Double? = null
 )

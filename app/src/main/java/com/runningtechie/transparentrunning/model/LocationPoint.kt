@@ -15,7 +15,7 @@ import java.util.*
     )]
 )
 data class LocationPoint(
-    @PrimaryKey(autoGenerate = true) val id: Long,
+    @PrimaryKey(autoGenerate = true) val id: Long? = null,
     val sessionId: Long,
     val time: Date,
     val elapsedTime: Date,
