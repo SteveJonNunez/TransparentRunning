@@ -1,12 +1,21 @@
 package com.runningtechie.transparentrunning
 
 import android.content.Intent
-import android.os.Bundle
+import android.os.*
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.runningtechie.transparentrunning.database.TransparentRunningRepository
+import com.runningtechie.transparentrunning.model.WorkoutSession
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
+    private val WORKOUT_SESSION_CREATED: Int = 0
+
+    private lateinit var handlerThread: HandlerThread
+    private lateinit var backgroundHandler: Handler
+    private lateinit var uiHandler: Handler
+    private lateinit var transparentRunningRepository: TransparentRunningRepository
 
     private lateinit var startButton: Button
     private lateinit var stopButton: Button
@@ -15,20 +24,85 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        startButton = findViewById(R.id.start_button)
+        createHandlerThread()
+        createBackgroundHandler()
+        createRepository()
+        createUiHandler()
+
+        setupStartButton()
+        setupStopButton()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handlerThread.quit()
+    }
+
+    private fun setupStopButton() {
         stopButton = findViewById(R.id.stop_button)
-
-
-        startButton.setOnClickListener {
-            intent = Intent(this, GPSForegroundService::class.java)
-            intent.action = ACTION_START_GPS_FOREGROUND_SERVICE
-            ContextCompat.startForegroundService(this, intent)
-        }
-
         stopButton.setOnClickListener {
-            intent = Intent(this, GPSForegroundService::class.java)
-            intent.action = ACTION_STOP_GPS_FOREGROUND_SERVICE
-            ContextCompat.startForegroundService(this, intent)
+            stopGpsForegroundService()
+        }
+    }
+
+    private fun setupStartButton() {
+        startButton = findViewById(R.id.start_button)
+        startButton.setOnClickListener {
+            setupWorkoutSession()
+        }
+    }
+
+    private fun createUiHandler() {
+        uiHandler = object : Handler(Looper.getMainLooper()) {
+            override fun handleMessage(message: Message?) {
+                super.handleMessage(message)
+                if (message != null) {
+                    when (message.what) {
+                        WORKOUT_SESSION_CREATED -> startGpsForegroundService(message.obj as Long)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun createRepository() {
+        transparentRunningRepository = TransparentRunningRepository.get()
+    }
+
+    private fun createBackgroundHandler() {
+        backgroundHandler = Handler(handlerThread.looper)
+    }
+
+    private fun createHandlerThread() {
+        handlerThread = HandlerThread("backgroundThread")
+        handlerThread.start()
+    }
+
+    private fun stopGpsForegroundService() {
+        intent = Intent(this, GPSForegroundService::class.java)
+        intent.action = ACTION_STOP_GPS_FOREGROUND_SERVICE
+        ContextCompat.startForegroundService(this, intent)
+    }
+
+    private fun startGpsForegroundService(workoutSessionId: Long) {
+        intent = Intent(this, GPSForegroundService::class.java)
+        intent.action = ACTION_START_GPS_FOREGROUND_SERVICE
+        intent.putExtra(WORKOUT_SESSION_ID_KEY, workoutSessionId)
+        ContextCompat.startForegroundService(this, intent)
+    }
+
+    private fun setupWorkoutSession() {
+        backgroundHandler.post {
+            val workoutSessionId = transparentRunningRepository.insertWorkoutSession(
+                WorkoutSession(
+                    title = "",
+                    date = Date()
+                )
+            )
+            var message = uiHandler.obtainMessage()
+            message.what = WORKOUT_SESSION_CREATED
+            message.obj = workoutSessionId
+            uiHandler.sendMessage(message)
         }
     }
 }
