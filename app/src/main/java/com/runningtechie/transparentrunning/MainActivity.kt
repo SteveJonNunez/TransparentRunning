@@ -1,6 +1,7 @@
 package com.runningtechie.transparentrunning
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.*
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +10,12 @@ import com.runningtechie.transparentrunning.database.TransparentRunningRepositor
 import com.runningtechie.transparentrunning.model.WorkoutSession
 import java.util.*
 
+
 class MainActivity : AppCompatActivity() {
-    private val WORKOUT_SESSION_CREATED: Int = 0
+    companion object {
+        const val WORKOUT_SESSION_CREATED: Int = 0
+        const val REQUEST_CODE: Int = 0
+    }
 
     private lateinit var handlerThread: HandlerThread
     private lateinit var backgroundHandler: Handler
@@ -38,6 +43,15 @@ class MainActivity : AppCompatActivity() {
         handlerThread.quit()
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            REQUEST_CODE -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED))
+                    startWorkout()
+            }
+        }
+    }
+
     private fun setupStopButton() {
         stopButton = findViewById(R.id.stop_button)
         stopButton.setOnClickListener {
@@ -48,7 +62,10 @@ class MainActivity : AppCompatActivity() {
     private fun setupStartButton() {
         startButton = findViewById(R.id.start_button)
         startButton.setOnClickListener {
-            setupWorkoutSession()
+            if (PermissionTool.hasFineLocation(this))
+                startWorkout()
+            else
+                PermissionTool.requestFineLocation(this)
         }
     }
 
@@ -91,7 +108,7 @@ class MainActivity : AppCompatActivity() {
         ContextCompat.startForegroundService(this, intent)
     }
 
-    private fun setupWorkoutSession() {
+    private fun startWorkout() {
         backgroundHandler.post {
             val workoutSessionId = transparentRunningRepository.insertWorkoutSession(
                 WorkoutSession(
