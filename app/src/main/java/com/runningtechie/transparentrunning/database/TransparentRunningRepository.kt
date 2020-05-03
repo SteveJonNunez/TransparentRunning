@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.runningtechie.transparentrunning.database.dao.LocationPointDao
 import com.runningtechie.transparentrunning.database.dao.WorkoutSessionDao
 import com.runningtechie.transparentrunning.database.dao.WorkoutSessionWithLocationPointsDao
+import com.runningtechie.transparentrunning.model.LocationPoint
 import com.runningtechie.transparentrunning.model.WorkoutSession
 
 private const val DATABASE_NAME = "transparent-running-database"
@@ -22,6 +23,7 @@ class TransparentRunningRepository private constructor(context: Context) {
     private val workoutSessionWithLocationPointsDao = database.workoutSessionWithLocationPointsDao()
 
     fun insertWorkoutSession(workoutSession: WorkoutSession): Long = workoutSessionDao.insert(workoutSession)
+    fun insertLocationPoint(locationPoint: LocationPoint): Long =  locationPointDao.insert(locationPoint)
     fun getWorkoutSession(): List<WorkoutSession> = workoutSessionDao.getAllWorkoutSessions()
 
     companion object {
