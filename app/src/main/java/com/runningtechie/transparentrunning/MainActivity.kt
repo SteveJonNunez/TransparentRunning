@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupStopButton() {
         stopButton = findViewById(R.id.stop_button)
         stopButton.setOnClickListener {
-            stopGpsForegroundService()
+            GPSForegroundService.stopGpsForegroundService(this)
         }
     }
 
@@ -69,13 +69,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
+
+
+
     private fun createUiHandler() {
         uiHandler = object : Handler(Looper.getMainLooper()) {
             override fun handleMessage(message: Message?) {
                 super.handleMessage(message)
                 if (message != null) {
                     when (message.what) {
-                        WORKOUT_SESSION_CREATED -> startGpsForegroundService(message.obj as Long)
+                        WORKOUT_SESSION_CREATED -> GPSForegroundService.startGpsForegroundService(this@MainActivity, message.obj as Long)
                     }
                 }
             }
@@ -93,19 +98,6 @@ class MainActivity : AppCompatActivity() {
     private fun createHandlerThread() {
         handlerThread = HandlerThread("backgroundThread")
         handlerThread.start()
-    }
-
-    private fun stopGpsForegroundService() {
-        intent = Intent(this, GPSForegroundService::class.java)
-        intent.action = ACTION_STOP_GPS_FOREGROUND_SERVICE
-        ContextCompat.startForegroundService(this, intent)
-    }
-
-    private fun startGpsForegroundService(workoutSessionId: Long) {
-        intent = Intent(this, GPSForegroundService::class.java)
-        intent.action = ACTION_START_GPS_FOREGROUND_SERVICE
-        intent.putExtra(WORKOUT_SESSION_ID_KEY, workoutSessionId)
-        ContextCompat.startForegroundService(this, intent)
     }
 
     private fun startWorkout() {

@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import com.runningtechie.transparentrunning.database.TransparentRunningRepository
 import com.runningtechie.transparentrunning.model.LocationPoint
@@ -30,6 +31,21 @@ const val WORKOUT_SESSION_ID_KEY = "WORKOUT_SESSION_ID_KEY"
 
 
 class GPSForegroundService : Service() {
+    companion object {
+        fun stopGpsForegroundService(context: Context) {
+            val intent = Intent(context, GPSForegroundService::class.java)
+            intent.action = ACTION_STOP_GPS_FOREGROUND_SERVICE
+            ContextCompat.startForegroundService(context, intent)
+        }
+
+        fun startGpsForegroundService(context: Context, workoutSessionId: Long) {
+            var intent = Intent(context, GPSForegroundService::class.java)
+            intent.action = ACTION_START_GPS_FOREGROUND_SERVICE
+            intent.putExtra(WORKOUT_SESSION_ID_KEY, workoutSessionId)
+            ContextCompat.startForegroundService(context, intent)
+        }
+    }
+
     private lateinit var handlerThread: HandlerThread
     private lateinit var backgroundHandler: Handler
     private lateinit var uiHandler: Handler
