@@ -9,14 +9,13 @@ import android.graphics.Color
 import android.location.Location
 import android.os.*
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.android.gms.location.*
 import com.runningtechie.transparentrunning.database.TransparentRunningRepository
 import com.runningtechie.transparentrunning.model.LocationPoint
-import com.runningtechie.transparentrunning.model.WorkoutSession
-import java.util.*
 
 
 const val CHANNEL_ID_STRING = "GPS_FOREGROUND_SERVICE"
@@ -95,7 +94,7 @@ class GPSForegroundService : Service() {
 
     private fun initializeHandlerThread() {
         Log.d(tag, "initializeHandlerThread")
-        handlerThread = HandlerThread("GpsBackgroundThread")
+        handlerThread = HandlerThread("GpsBackgroundThread", Process.THREAD_PRIORITY_BACKGROUND)
         initializeHandler()
     }
 
@@ -111,21 +110,24 @@ class GPSForegroundService : Service() {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult ?: return
+                Log.d(tag, "onLocationResult")
+
                 for (location in locationResult.locations) {
                     if (previousLocation != null) {
                         elapsedDistance += location.distanceTo(previousLocation)
                         startTime = location.time
                     }
-
-                    LocationPoint(
-                        sessionId = 1L,
-                        time = location.time,
-                        elapsedTime = location.time - startTime,
-                        latitude = location.latitude,
-                        longitude = location.longitude,
-                        altitude = location.altitude,
-                        speed = location.speed,
-                        elapsedDistance = elapsedDistance
+                    transparentRunningRepository.insertLocationPoint(
+                        LocationPoint(
+                            sessionId = 1L,
+                            time = location.time,
+                            elapsedTime = location.time - startTime,
+                            latitude = location.latitude,
+                            longitude = location.longitude,
+                            altitude = location.altitude,
+                            speed = location.speed,
+                            elapsedDistance = elapsedDistance
+                        )
                     )
 
                     previousLocation = location
