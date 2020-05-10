@@ -72,7 +72,6 @@ class GPSForegroundService : Service() {
         initializeOngoingLocationRequest()
         initializeSinglegLocationRequest()
         initializeHandlerThread()
-        initializeRepository()
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -104,10 +103,6 @@ class GPSForegroundService : Service() {
         backgroundHandler = Handler(getBackgroundLooper())
     }
 
-    private fun initializeRepository() {
-        transparentRunningRepository = TransparentRunningRepository.get()
-    }
-
     private fun initializeHandlerThread() {
         Log.d(tag, "initializeHandlerThread")
         handlerThread = HandlerThread("GpsBackgroundThread", Process.THREAD_PRIORITY_BACKGROUND)
@@ -133,7 +128,7 @@ class GPSForegroundService : Service() {
                         elapsedDistance += location.distanceTo(previousLocation)
                         startTime = location.time
                     }
-                    transparentRunningRepository.insertLocationPoint(
+                    TransparentRunningRepository.insertLocationPoint(
                         LocationPoint(
                             sessionId = 1L,
                             time = location.time,

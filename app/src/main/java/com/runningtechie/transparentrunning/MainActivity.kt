@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var handlerThread: HandlerThread
     private lateinit var backgroundHandler: Handler
     private lateinit var uiHandler: Handler
-    private lateinit var transparentRunningRepository: TransparentRunningRepository
 
     private lateinit var startButton: Button
     private lateinit var stopButton: Button
@@ -31,7 +30,6 @@ class MainActivity : AppCompatActivity() {
 
         createHandlerThread()
         createBackgroundHandler()
-        createRepository()
         createUiHandler()
 
         setupStartButton()
@@ -87,10 +85,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun createRepository() {
-        transparentRunningRepository = TransparentRunningRepository.get()
-    }
-
     private fun createBackgroundHandler() {
         backgroundHandler = Handler(handlerThread.looper)
     }
@@ -102,7 +96,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun startWorkout() {
         backgroundHandler.post {
-            val workoutSessionId = transparentRunningRepository.insertWorkoutSession(
+            val workoutSessionId = TransparentRunningRepository.insertWorkoutSession(
                 WorkoutSession(
                     title = "",
                     date = Date()
