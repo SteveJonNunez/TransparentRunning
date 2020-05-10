@@ -1,6 +1,10 @@
 package com.runningtechie.transparentrunning.database.dao
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Update
+import androidx.room.Delete
 
 
 @Dao
