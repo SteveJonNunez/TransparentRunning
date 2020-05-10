@@ -10,7 +10,7 @@ import com.runningtechie.transparentrunning.model.WorkoutSession
 
 private const val DATABASE_NAME = "transparent-running-database"
 
-class TransparentRunningRepository {
+class TransparentRunningRepository private constructor() {
     companion object {
         private lateinit var workoutSessionDao: WorkoutSessionDao
         private lateinit var locationPointDao: LocationPointDao
