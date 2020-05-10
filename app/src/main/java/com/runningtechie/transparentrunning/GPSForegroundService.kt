@@ -40,6 +40,8 @@ const val WORKOUT_SESSION_ID_KEY = "WORKOUT_SESSION_ID_KEY"
 
 class GPSForegroundService : Service() {
     companion object {
+        const val INTERVAL_TIME: Long = 10 * 1000
+
         fun stopGpsForegroundService(context: Context) {
             val intent = Intent(context, GPSForegroundService::class.java)
             intent.action = ACTION_STOP_GPS_FOREGROUND_SERVICE
@@ -158,7 +160,7 @@ class GPSForegroundService : Service() {
     private fun initializeOngoingLocationRequest() {
         ongoingLocationRequest = LocationRequest.create()
         ongoingLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        ongoingLocationRequest.interval = 10 * 1000
+        ongoingLocationRequest.interval = INTERVAL_TIME
     }
 
     private fun initializeSinglegLocationRequest() {
