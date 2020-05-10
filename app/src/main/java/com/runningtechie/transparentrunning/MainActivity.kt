@@ -70,17 +70,16 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
-
-
-
     private fun createUiHandler() {
         uiHandler = object : Handler(Looper.getMainLooper()) {
             override fun handleMessage(message: Message?) {
                 super.handleMessage(message)
                 if (message != null) {
                     when (message.what) {
-                        WORKOUT_SESSION_CREATED -> GPSForegroundService.startGpsForegroundService(this@MainActivity, message.obj as Long)
+                        WORKOUT_SESSION_CREATED -> GPSForegroundService.startGpsForegroundService(
+                            this@MainActivity,
+                            message.obj as Long
+                        )
                     }
                 }
             }

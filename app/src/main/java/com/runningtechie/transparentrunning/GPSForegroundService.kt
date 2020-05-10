@@ -92,7 +92,12 @@ class GPSForegroundService : Service() {
         Log.d(tag, "onStartCommand")
 
         when (intent.action) {
-            ACTION_START_GPS_FOREGROUND_SERVICE -> startForegroundService(intent.getLongExtra(WORKOUT_SESSION_ID_KEY, 0L))
+            ACTION_START_GPS_FOREGROUND_SERVICE -> startForegroundService(
+                intent.getLongExtra(
+                    WORKOUT_SESSION_ID_KEY,
+                    0L
+                )
+            )
             ACTION_STOP_GPS_FOREGROUND_SERVICE -> stopForegroundService()
             ACTION_PLAY_GPS_FOREGROUND_SERVICE -> play()
             ACTION_PAUSE_GPS_FOREGROUND_SERVICE -> pause()

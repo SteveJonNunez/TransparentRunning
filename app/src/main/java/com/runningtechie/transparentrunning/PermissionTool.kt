@@ -11,10 +11,17 @@ class PermissionTool private constructor() {
         const val FINE_LOCATION_REQUEST_CODE: Int = 16
 
         fun hasFineLocation(activity: Activity): Boolean =
-            (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            (ContextCompat.checkSelfPermission(
+                activity,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED)
 
         fun requestFineLocation(activity: Activity) {
-            ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), FINE_LOCATION_REQUEST_CODE)
+            ActivityCompat.requestPermissions(
+                activity,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                FINE_LOCATION_REQUEST_CODE
+            )
         }
     }
 }
