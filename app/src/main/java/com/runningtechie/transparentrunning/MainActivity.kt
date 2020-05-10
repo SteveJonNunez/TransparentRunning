@@ -1,14 +1,16 @@
 package com.runningtechie.transparentrunning
 
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.*
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Looper
+import android.os.Message
+import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.runningtechie.transparentrunning.database.TransparentRunningRepository
 import com.runningtechie.transparentrunning.model.WorkoutSession
-import java.util.*
+import java.util.Date
 
 
 class MainActivity : AppCompatActivity() {
