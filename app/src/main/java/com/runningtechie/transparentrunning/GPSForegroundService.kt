@@ -22,7 +22,11 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.google.android.gms.location.*
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationResult
 import com.runningtechie.transparentrunning.database.TransparentRunningRepository
 import com.runningtechie.transparentrunning.model.LocationPoint
 
