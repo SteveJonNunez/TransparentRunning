@@ -84,7 +84,7 @@ class GPSForegroundService : Service() {
         initializeFusedLocationClient()
         initializeLocationCallback()
         initializeOngoingLocationRequest()
-        initializeSinglegLocationRequest()
+        initializeSingleLocationRequest()
         initializeHandlerThread()
     }
 
@@ -172,7 +172,7 @@ class GPSForegroundService : Service() {
         ongoingLocationRequest.interval = INTERVAL_TIME
     }
 
-    private fun initializeSinglegLocationRequest() {
+    private fun initializeSingleLocationRequest() {
         singleLocationRequest = LocationRequest.create()
         singleLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         singleLocationRequest.numUpdates = 1
