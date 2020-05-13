@@ -143,10 +143,11 @@ class GPSForegroundService : Service() {
                 Log.d(tag, "onLocationResult")
 
                 for (location in locationResult.locations) {
-                    if (previousLocation != null) {
+                    if (previousLocation != null)
                         elapsedDistance += location.distanceTo(previousLocation)
+                    else
                         startTime = location.time
-                    }
+
                     TransparentRunningRepository.insertLocationPoint(
                         LocationPoint(
                             sessionId = 1L,
