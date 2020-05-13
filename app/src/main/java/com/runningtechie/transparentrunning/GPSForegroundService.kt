@@ -53,7 +53,7 @@ class GPSForegroundService : Service() {
         }
 
         fun startGpsForegroundService(context: Context, workoutSessionId: Long) {
-            var intent = Intent(context, GPSForegroundService::class.java)
+            val intent = Intent(context, GPSForegroundService::class.java)
             intent.action = ACTION_START_GPS_FOREGROUND_SERVICE
             intent.putExtra(WORKOUT_SESSION_ID_KEY, workoutSessionId)
             ContextCompat.startForegroundService(context, intent)

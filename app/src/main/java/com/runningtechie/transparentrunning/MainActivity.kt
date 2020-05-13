@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
                     date = Date()
                 )
             )
-            var message = uiHandler.obtainMessage()
+            val message = uiHandler.obtainMessage()
             message.what = WORKOUT_SESSION_CREATED
             message.obj = workoutSessionId
             uiHandler.sendMessage(message)
