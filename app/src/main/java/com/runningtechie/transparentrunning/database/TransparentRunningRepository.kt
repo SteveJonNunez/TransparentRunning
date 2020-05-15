@@ -32,5 +32,6 @@ class TransparentRunningRepository private constructor() {
         fun insertWorkoutSession(workoutSession: WorkoutSession): Long = workoutSessionDao.insert(workoutSession)
         fun insertLocationPoint(locationPoint: LocationPoint): Long = locationPointDao.insert(locationPoint)
         fun getWorkoutSessions(): LiveData<List<WorkoutSession>> = workoutSessionDao.getAllWorkoutSessions()
+        fun getLocationPoints(workoutSessionId: Long): LiveData<List<LocationPoint>> = locationPointDao.getAllLocationPoints(workoutSessionId)
     }
 }

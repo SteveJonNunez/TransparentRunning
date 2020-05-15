@@ -1,5 +1,6 @@
 package com.runningtechie.transparentrunning.ui.viewWorkouts
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +15,20 @@ import com.runningtechie.transparentrunning.R
 import com.runningtechie.transparentrunning.model.WorkoutSession
 
 class WorkoutSessionListFragment : Fragment() {
+    interface Callbacks {
+        fun onWorkoutSelected(workoutSessionId: Long?)
+    }
+
+    private var callbacks: Callbacks? = null
+
     private lateinit var workoutSessionListViewModel: WorkoutSessionListViewModel
     private lateinit var workoutSessionRecyclerView: RecyclerView
     private var adapter: WorkoutSessionAdapter? = WorkoutSessionAdapter(emptyList())
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,9 +38,9 @@ class WorkoutSessionListFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_workout_session_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_recycler_view_list, container, false)
 
-        workoutSessionRecyclerView = view.findViewById(R.id.workout_session_recycler_view) as RecyclerView
+        workoutSessionRecyclerView = view.findViewById(R.id.recycler_view) as RecyclerView
         workoutSessionRecyclerView.layoutManager = LinearLayoutManager(context)
         workoutSessionRecyclerView.adapter = adapter
         return view
@@ -44,6 +56,11 @@ class WorkoutSessionListFragment : Fragment() {
                 }
             }
         )
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
     }
 
     private fun updateUI(workoutSessions: List<WorkoutSession>) {
@@ -76,12 +93,13 @@ class WorkoutSessionListFragment : Fragment() {
         }
 
         override fun onClick(v: View?) {
-
+            callbacks?.onWorkoutSelected(workoutSession.id)
         }
 
     }
 
-    private inner class WorkoutSessionAdapter(var workoutSessions: List<WorkoutSession>) : RecyclerView.Adapter<WorkoutSessionHolder>() {
+    private inner class WorkoutSessionAdapter(var workoutSessions: List<WorkoutSession>) :
+        RecyclerView.Adapter<WorkoutSessionHolder>() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WorkoutSessionHolder {
             val view = layoutInflater.inflate(R.layout.list_item_workout_session, parent, false)
             return WorkoutSessionHolder(view)
