@@ -1,6 +1,5 @@
 package com.runningtechie.transparentrunning.ui
 
-import android.app.ActivityOptions
 import android.content.pm.PackageManager
 import android.os.*
 import android.widget.Button
@@ -10,7 +9,6 @@ import com.runningtechie.transparentrunning.PermissionTool
 import com.runningtechie.transparentrunning.R
 import com.runningtechie.transparentrunning.database.TransparentRunningRepository
 import com.runningtechie.transparentrunning.model.WorkoutSession
-import com.runningtechie.transparentrunning.ui.viewWorkouts.WorkoutSessionActivity
 import java.util.Date
 
 

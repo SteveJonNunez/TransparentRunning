@@ -29,6 +29,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationResult
 import com.runningtechie.transparentrunning.database.TransparentRunningRepository
 import com.runningtechie.transparentrunning.model.LocationPoint
+import com.runningtechie.transparentrunning.ui.MainActivity
 
 
 const val CHANNEL_ID_STRING = "GPS_FOREGROUND_SERVICE"
@@ -63,12 +64,13 @@ class GPSForegroundService : Service() {
     private lateinit var handlerThread: HandlerThread
     private lateinit var backgroundHandler: Handler
     private lateinit var uiHandler: Handler
-    private lateinit var transparentRunningRepository: TransparentRunningRepository
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
+    private lateinit var singleLocationCallback: LocationCallback
     private lateinit var ongoingLocationRequest: LocationRequest
     private lateinit var singleLocationRequest: LocationRequest
     private lateinit var notificationBuilder: NotificationCompat.Builder
+    private var workoutSessionId: Long = 0L
 
     private var startTime: Long = 0L
     private var elapsedDistance: Float = 0.0F
@@ -115,7 +117,6 @@ class GPSForegroundService : Service() {
 
     override fun onDestroy() {
         Log.d(tag, "onDestroy")
-
     }
 
     private fun initializeHandler() {
@@ -150,7 +151,7 @@ class GPSForegroundService : Service() {
 
                     TransparentRunningRepository.insertLocationPoint(
                         LocationPoint(
-                            sessionId = 1L,
+                            sessionId = workoutSessionId,
                             time = location.time,
                             elapsedTime = location.time - startTime,
                             latitude = location.latitude,
@@ -160,7 +161,6 @@ class GPSForegroundService : Service() {
                             elapsedDistance = elapsedDistance
                         )
                     )
-
                     previousLocation = location
                 }
             }
@@ -178,6 +178,29 @@ class GPSForegroundService : Service() {
         singleLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         singleLocationRequest.numUpdates = 1
     }
+
+    private fun startOngoingLocationUpdates() {
+        fusedLocationClient.requestLocationUpdates(
+            ongoingLocationRequest,
+            locationCallback,
+            getBackgroundLooper()
+        )
+    }
+
+    private fun stopOngoingLocationUpdates() {
+        fusedLocationClient.removeLocationUpdates(locationCallback)
+        fusedLocationClient.requestLocationUpdates(
+            singleLocationRequest,
+            locationCallback,
+            getBackgroundLooper()
+        )
+    }
+
+
+
+
+
+
 
     private fun createNotificationChannel(): String {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -206,6 +229,7 @@ class GPSForegroundService : Service() {
 
     @SuppressLint("RestrictedApi")
     private fun startForegroundService(workoutSessionId: Long) {
+        this.workoutSessionId = workoutSessionId
         setupOngoingNotification()
         startOngoingLocationUpdates()
         startForeground(CHANNEL_ID_INT, notificationBuilder.build())
@@ -293,23 +317,6 @@ class GPSForegroundService : Service() {
             NotificationCompat.Action(R.drawable.ic_media_play, "Play", pendingPlayIntent)
         notificationBuilder.mActions[pauseStartActionIndex] = playAction
         NotificationManagerCompat.from(this).notify(CHANNEL_ID_INT, notificationBuilder.build())
-    }
-
-    private fun startOngoingLocationUpdates() {
-        fusedLocationClient.requestLocationUpdates(
-            ongoingLocationRequest,
-            locationCallback,
-            getBackgroundLooper()
-        )
-    }
-
-    private fun stopOngoingLocationUpdates() {
-        fusedLocationClient.removeLocationUpdates(locationCallback)
-        fusedLocationClient.requestLocationUpdates(
-            singleLocationRequest,
-            locationCallback,
-            getBackgroundLooper()
-        )
     }
 
     private fun getBackgroundLooper(): Looper {
