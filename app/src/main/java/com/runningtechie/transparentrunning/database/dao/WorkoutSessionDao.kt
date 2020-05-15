@@ -1,5 +1,6 @@
 package com.runningtechie.transparentrunning.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import com.runningtechie.transparentrunning.model.WorkoutSession
@@ -8,7 +9,7 @@ import com.runningtechie.transparentrunning.model.WorkoutSession
 interface WorkoutSessionDao: BaseDao<WorkoutSession> {
 
     @Query("SELECT * FROM WorkoutSession")
-    fun getAllWorkoutSessions(): List<WorkoutSession>
+    fun getAllWorkoutSessions(): LiveData<List<WorkoutSession>>
 
     @Query("SELECT * FROM WorkoutSession WHERE id=(:id)")
     fun getWorkoutSession(id: Int): WorkoutSession

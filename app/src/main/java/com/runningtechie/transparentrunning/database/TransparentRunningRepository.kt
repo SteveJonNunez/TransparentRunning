@@ -1,6 +1,7 @@
 package com.runningtechie.transparentrunning.database
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.runningtechie.transparentrunning.database.dao.LocationPointDao
 import com.runningtechie.transparentrunning.database.dao.WorkoutSessionDao
@@ -30,6 +31,6 @@ class TransparentRunningRepository private constructor() {
 
         fun insertWorkoutSession(workoutSession: WorkoutSession): Long = workoutSessionDao.insert(workoutSession)
         fun insertLocationPoint(locationPoint: LocationPoint): Long = locationPointDao.insert(locationPoint)
-        fun getWorkoutSession(): List<WorkoutSession> = workoutSessionDao.getAllWorkoutSessions()
+        fun getWorkoutSessions(): LiveData<List<WorkoutSession>> = workoutSessionDao.getAllWorkoutSessions()
     }
 }

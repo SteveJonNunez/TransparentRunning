@@ -1,15 +1,16 @@
-package com.runningtechie.transparentrunning
+package com.runningtechie.transparentrunning.ui
 
+import android.app.ActivityOptions
 import android.content.pm.PackageManager
-import android.os.Handler
-import android.os.HandlerThread
-import android.os.Looper
-import android.os.Message
-import android.os.Bundle
+import android.os.*
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.runningtechie.transparentrunning.GPSForegroundService
+import com.runningtechie.transparentrunning.PermissionTool
+import com.runningtechie.transparentrunning.R
 import com.runningtechie.transparentrunning.database.TransparentRunningRepository
 import com.runningtechie.transparentrunning.model.WorkoutSession
+import com.runningtechie.transparentrunning.ui.viewWorkouts.WorkoutSessionActivity
 import java.util.Date
 
 
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var startButton: Button
     private lateinit var stopButton: Button
+    private lateinit var viewWorkoutsButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         setupStartButton()
         setupStopButton()
+        setupViewWorkoutsButton()
     }
 
     override fun onDestroy() {
@@ -55,7 +58,16 @@ class MainActivity : AppCompatActivity() {
     private fun setupStopButton() {
         stopButton = findViewById(R.id.stop_button)
         stopButton.setOnClickListener {
-            GPSForegroundService.stopGpsForegroundService(this)
+            GPSForegroundService.stopGpsForegroundService(
+                this
+            )
+        }
+    }
+
+    private fun setupViewWorkoutsButton() {
+        viewWorkoutsButton = findViewById(R.id.view_workout_button)
+        viewWorkoutsButton.setOnClickListener {
+            startActivity(WorkoutSessionActivity.newIntent(this@MainActivity))
         }
     }
 
@@ -65,7 +77,9 @@ class MainActivity : AppCompatActivity() {
             if (PermissionTool.hasFineLocation(this))
                 startWorkout()
             else
-                PermissionTool.requestFineLocation(this)
+                PermissionTool.requestFineLocation(
+                    this
+                )
         }
     }
 
@@ -104,7 +118,8 @@ class MainActivity : AppCompatActivity() {
                 )
             )
             val message = uiHandler.obtainMessage()
-            message.what = WORKOUT_SESSION_CREATED
+            message.what =
+                WORKOUT_SESSION_CREATED
             message.obj = workoutSessionId
             uiHandler.sendMessage(message)
         }
