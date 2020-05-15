@@ -11,12 +11,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="4dp"
+            android:paddingRight="4dp"
+            android:text="ID: "
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/workout_session_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="8dp"
+            tools:text="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="4dp"
+            android:paddingRight="4dp"
+            android:text="Title: "
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/workout_session_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingRight="8dp"
             tools:text="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="4dp"
+            android:paddingRight="4dp"
+            android:text="Date: "
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/workout_session_date"
@@ -29,12 +73,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="4dp"
+            android:paddingRight="4dp"
+            android:text="Duration: "
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/workout_session_duration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingRight="8dp"
             tools:text="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="4dp"
+            android:paddingRight="4dp"
+            android:text="Distance: "
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/workout_session_distance"
@@ -42,7 +109,5 @@
             android:layout_height="wrap_content"
             tools:text="Wed May 13 00:00:00 EDT 2020"/>
     </LinearLayout>
-
-
 
 </LinearLayout>

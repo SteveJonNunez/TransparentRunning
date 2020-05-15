@@ -75,6 +75,7 @@ class WorkoutSessionListFragment : Fragment() {
     private inner class WorkoutSessionHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         private lateinit var workoutSession: WorkoutSession
 
+        private val idTextView: TextView = itemView.findViewById(R.id.workout_session_id)
         private val titleTextView: TextView = itemView.findViewById(R.id.workout_session_title)
         private val dateTextView: TextView = itemView.findViewById(R.id.workout_session_date)
         private val durationTextView: TextView = itemView.findViewById(R.id.workout_session_duration)
@@ -86,7 +87,8 @@ class WorkoutSessionListFragment : Fragment() {
 
         fun bind(workoutSession: WorkoutSession) {
             this.workoutSession = workoutSession
-            titleTextView.text = workoutSession.id.toString()
+            idTextView.text = workoutSession.id.toString()
+            titleTextView.text = workoutSession.title.toString()
             dateTextView.text = workoutSession.date.toString()
             durationTextView.text = workoutSession.duration.toString()
             distanceTextView.text = workoutSession.distance.toString()
