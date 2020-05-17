@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 
 class PermissionTool private constructor() {
     companion object {
-        private const val FINE_LOCATION_REQUEST_CODE: Int = 16
+        const val FINE_LOCATION_REQUEST_CODE: Int = 16
 
         fun hasFineLocation(activity: Activity): Boolean =
             (ContextCompat.checkSelfPermission(

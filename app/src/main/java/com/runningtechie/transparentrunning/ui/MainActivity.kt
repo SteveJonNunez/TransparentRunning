@@ -15,7 +15,6 @@ import java.util.Date
 class MainActivity : AppCompatActivity() {
     companion object {
         const val WORKOUT_SESSION_CREATED: Int = 0
-        const val REQUEST_CODE: Int = 0
     }
 
     private lateinit var handlerThread: HandlerThread
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         when (requestCode) {
-            REQUEST_CODE -> {
+            PermissionTool.FINE_LOCATION_REQUEST_CODE -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED))
                     startWorkout()
             }
@@ -75,9 +74,7 @@ class MainActivity : AppCompatActivity() {
             if (PermissionTool.hasFineLocation(this))
                 startWorkout()
             else
-                PermissionTool.requestFineLocation(
-                    this
-                )
+                PermissionTool.requestFineLocation(this)
         }
     }
 
