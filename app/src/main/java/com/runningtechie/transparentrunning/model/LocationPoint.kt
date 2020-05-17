@@ -2,6 +2,7 @@ package com.runningtechie.transparentrunning.model
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.util.*
 
@@ -12,7 +13,8 @@ import java.util.*
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("sessionId"),
         onDelete = ForeignKey.CASCADE
-    )]
+    )],
+    indices = [Index(value = ["sessionId"])]
 )
 data class LocationPoint(
     @PrimaryKey(autoGenerate = true) val id: Long? = null,

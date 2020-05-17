@@ -17,7 +17,6 @@ import android.os.HandlerThread
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -45,8 +44,6 @@ const val WORKOUT_SESSION_ID_KEY = "WORKOUT_SESSION_ID_KEY"
 
 class GPSForegroundService : Service() {
     companion object {
-        const val INTERVAL_TIME: Long = 10 * 1000
-
         fun stopGpsForegroundService(context: Context) {
             val intent = Intent(context, GPSForegroundService::class.java)
             intent.action = ACTION_STOP_GPS_FOREGROUND_SERVICE
@@ -61,38 +58,16 @@ class GPSForegroundService : Service() {
         }
     }
 
-    private lateinit var handlerThread: HandlerThread
-    private lateinit var backgroundHandler: Handler
     private lateinit var uiHandler: Handler
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var locationCallback: LocationCallback
-    private lateinit var singleLocationCallback: LocationCallback
-    private lateinit var ongoingLocationRequest: LocationRequest
-    private lateinit var singleLocationRequest: LocationRequest
+    private lateinit var gpsLocationProvider: GPSLocationProvider
+
     private lateinit var notificationBuilder: NotificationCompat.Builder
     private var workoutSessionId: Long = 0L
 
-    private var startTime: Long = 0L
-    private var elapsedDistance: Float = 0.0F
-    private var previousLocation: Location? = null
-
     private val pauseStartActionIndex = 0
     private val finishActionIndex = 1
-    private val tag = "GPSForegroundService"
-
-    override fun onCreate() {
-        Log.d(tag, "onCreate")
-
-        initializeFusedLocationClient()
-        initializeLocationCallback()
-        initializeOngoingLocationRequest()
-        initializeSingleLocationRequest()
-        initializeHandlerThread()
-    }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        Log.d(tag, "onStartCommand")
-
         when (intent.action) {
             ACTION_START_GPS_FOREGROUND_SERVICE -> startForegroundService(
                 intent.getLongExtra(
@@ -111,96 +86,8 @@ class GPSForegroundService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder? {
-        Log.d(tag, "onBind")
         throw UnsupportedOperationException("Not yet implemented.")
     }
-
-    override fun onDestroy() {
-        Log.d(tag, "onDestroy")
-    }
-
-    private fun initializeHandler() {
-        backgroundHandler = Handler(getBackgroundLooper())
-    }
-
-    private fun initializeHandlerThread() {
-        Log.d(tag, "initializeHandlerThread")
-        handlerThread = HandlerThread("GpsBackgroundThread", Process.THREAD_PRIORITY_BACKGROUND)
-        initializeHandler()
-    }
-
-    private fun initializeFusedLocationClient() {
-        Log.d(tag, "initializeFusedLocationClient")
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-    }
-
-    private fun initializeLocationCallback() {
-        Log.d(tag, "initializeLocationCallback")
-
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult?) {
-                locationResult ?: return
-                Log.d(tag, "onLocationResult")
-
-                for (location in locationResult.locations) {
-                    if (previousLocation != null)
-                        elapsedDistance += location.distanceTo(previousLocation)
-                    else
-                        startTime = location.time
-
-                    TransparentRunningRepository.insertLocationPoint(
-                        LocationPoint(
-                            sessionId = workoutSessionId,
-                            time = location.time,
-                            elapsedTime = location.time - startTime,
-                            latitude = location.latitude,
-                            longitude = location.longitude,
-                            altitude = location.altitude,
-                            speed = location.speed,
-                            elapsedDistance = elapsedDistance
-                        )
-                    )
-                    previousLocation = location
-                }
-            }
-        }
-    }
-
-    private fun initializeOngoingLocationRequest() {
-        ongoingLocationRequest = LocationRequest.create()
-        ongoingLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        ongoingLocationRequest.interval = INTERVAL_TIME
-    }
-
-    private fun initializeSingleLocationRequest() {
-        singleLocationRequest = LocationRequest.create()
-        singleLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        singleLocationRequest.numUpdates = 1
-    }
-
-    private fun startOngoingLocationUpdates() {
-        fusedLocationClient.requestLocationUpdates(
-            ongoingLocationRequest,
-            locationCallback,
-            getBackgroundLooper()
-        )
-    }
-
-    private fun stopOngoingLocationUpdates() {
-        fusedLocationClient.removeLocationUpdates(locationCallback)
-        fusedLocationClient.requestLocationUpdates(
-            singleLocationRequest,
-            locationCallback,
-            getBackgroundLooper()
-        )
-    }
-
-
-
-
-
-
 
     private fun createNotificationChannel(): String {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -230,8 +117,9 @@ class GPSForegroundService : Service() {
     @SuppressLint("RestrictedApi")
     private fun startForegroundService(workoutSessionId: Long) {
         this.workoutSessionId = workoutSessionId
+        gpsLocationProvider = GPSLocationProvider(workoutSessionId, this)
         setupOngoingNotification()
-        startOngoingLocationUpdates()
+        gpsLocationProvider.startOngoingLocationUpdates()
         startForeground(CHANNEL_ID_INT, notificationBuilder.build())
     }
 
@@ -275,27 +163,20 @@ class GPSForegroundService : Service() {
     }
 
     private fun stopForegroundService() {
-        stopOngoingLocationUpdates()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            handlerThread.quitSafely()
-        } else {
-            handlerThread.quit()
-        }
+        gpsLocationProvider.stopOngoingLocationUpdates()
         stopForeground(true)
         stopSelf()
     }
 
     private fun play() {
         changeNotificationButtonFromPlayToPause()
-
         NotificationManagerCompat.from(this).notify(CHANNEL_ID_INT, notificationBuilder.build())
-        startOngoingLocationUpdates()
+        gpsLocationProvider.startOngoingLocationUpdates()
     }
 
     private fun pause() {
         changeNotificationFromPauseToPlay()
-
-        stopOngoingLocationUpdates()
+        gpsLocationProvider.stopOngoingLocationUpdates()
     }
 
     @SuppressLint("RestrictedApi")
@@ -317,13 +198,6 @@ class GPSForegroundService : Service() {
             NotificationCompat.Action(R.drawable.ic_media_play, "Play", pendingPlayIntent)
         notificationBuilder.mActions[pauseStartActionIndex] = playAction
         NotificationManagerCompat.from(this).notify(CHANNEL_ID_INT, notificationBuilder.build())
-    }
-
-    private fun getBackgroundLooper(): Looper {
-        if (!handlerThread.isAlive)
-            handlerThread.start()
-
-        return handlerThread.looper
     }
 
 }
