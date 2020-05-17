@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 28
@@ -9,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.runningtechie.transparentrunning"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -48,4 +50,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.firebase:firebase-analytics-ktx:17.4.1'
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
 }
