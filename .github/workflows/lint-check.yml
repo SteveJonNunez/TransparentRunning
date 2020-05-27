@@ -3,14 +3,14 @@ name: Lint Check
 on: [push]
 
 jobs:
-  build:
+  detekt:
     # Job name is Greeting
     name: Detekt
     # This job runs on Linux
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
-          uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2.1.1
 
       - name: Detekt all
         uses: natiginfo/action-detekt-all@1.9.1
