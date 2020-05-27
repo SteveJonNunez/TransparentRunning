@@ -5,13 +5,13 @@ on: [push]
 jobs:
   build:
     # Job name is Greeting
-    name: Greeting
+    name: Detekt
     # This job runs on Linux
     runs-on: ubuntu-latest
     steps:
       - name: Detekt all
         uses: natiginfo/action-detekt-all@1.9.1
         with:
-          args: --fail-fast
+          args: '--fail-fast'
 
 
