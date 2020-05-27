@@ -3,7 +3,7 @@ name: Lint Check
 on: [push]
 
 jobs:
-  detekt:
+  dsfdsf:
     # Job name is Greeting
     name: Detekt
     # This job runs on Linux
@@ -16,10 +16,6 @@ jobs:
         uses: natiginfo/action-detekt-all@1.9.1
 #        with:
 #          args: --fail-fast
-
-  build:
-    name: Test
-
       - name: Hello world
           uses: actions/hello-world-javascript-action@v1
           with:
@@ -28,5 +24,7 @@ jobs:
       # This step prints an output (time) from the previous step's action.
       - name: Echo the greeting's time
         run: echo 'The time was ${{ steps.hello.outputs.time }}.'
+
+
 
 
