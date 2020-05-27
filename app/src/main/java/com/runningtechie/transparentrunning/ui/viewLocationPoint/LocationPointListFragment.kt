@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.runningtechie.transparentrunning.R
 import com.runningtechie.transparentrunning.model.LocationPoint
-import com.runningtechie.transparentrunning.model.WorkoutSession
+import kotlinx.android.synthetic.main.fragment_recycler_view_list.*
+import kotlinx.android.synthetic.main.list_item_location_point.*
 
 class LocationPointListFragment : Fragment() {
 
     private lateinit var locationPointListViewModel: LocationPointListViewModel
-    private lateinit var locationPointRecyclerView: RecyclerView
     private var adapter: LocationPointAdapter? = LocationPointAdapter(emptyList())
 
 
@@ -44,9 +44,8 @@ class LocationPointListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_recycler_view_list, container, false)
 
-        locationPointRecyclerView = view.findViewById(R.id.recycler_view) as RecyclerView
-        locationPointRecyclerView.layoutManager = LinearLayoutManager(context)
-        locationPointRecyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = adapter
         return view
     }
 
@@ -64,33 +63,23 @@ class LocationPointListFragment : Fragment() {
 
     private fun updateUI(locationPoints: List<LocationPoint>) {
         adapter = LocationPointAdapter(locationPoints)
-        locationPointRecyclerView.adapter = adapter
+        recyclerView.adapter = adapter
     }
 
     private inner class LocationPointHolder(view: View) : RecyclerView.ViewHolder(view) {
         private lateinit var locationPoint: LocationPoint
 
-        private val locationPointIdTextView: TextView = itemView.findViewById(R.id.location_point_id)
-        private val workoutSessionIdTextView: TextView = itemView.findViewById(R.id.location_point_workout_session_id)
-        private val timeTextView: TextView = itemView.findViewById(R.id.location_point_time)
-        private val elapsedTimeTextView: TextView = itemView.findViewById(R.id.location_point_elapsed_time)
-        private val latitudeTextView: TextView = itemView.findViewById(R.id.location_point_latitude)
-        private val longitudeTextView: TextView = itemView.findViewById(R.id.location_point_logitude)
-        private val altitudeTextView: TextView = itemView.findViewById(R.id.location_point_altitude)
-        private val speedTextView: TextView = itemView.findViewById(R.id.location_point_speed)
-        private val elapsedDistanceTextView: TextView = itemView.findViewById(R.id.location_point_elapsed_distance)
-
         fun bind(locationPoint: LocationPoint) {
             this.locationPoint = locationPoint
             locationPointIdTextView.text = locationPoint.id.toString()
             workoutSessionIdTextView.text = locationPoint.sessionId.toString()
-            timeTextView.text = locationPoint.time.toString()
-            elapsedTimeTextView.text = locationPoint.elapsedTime.toString()
-            latitudeTextView.text = locationPoint.latitude.toString()
-            longitudeTextView.text = locationPoint.longitude.toString()
-            altitudeTextView.text = locationPoint.altitude.toString()
-            speedTextView.text = locationPoint.speed.toString()
-            elapsedDistanceTextView.text = locationPoint.elapsedDistance.toString()
+            locationPointTimeTextView.text = locationPoint.time.toString()
+            locationPointElapsedTimeTextView.text = locationPoint.elapsedTime.toString()
+            locationPointLatitudeTextView.text = locationPoint.latitude.toString()
+            locationPointLongitudeTextView.text = locationPoint.longitude.toString()
+            locationPointAltitudeTextView.text = locationPoint.altitude.toString()
+            locationPointSpeedTextView.text = locationPoint.speed.toString()
+            locationPointElapsedDistanceTextView.text = locationPoint.elapsedDistance.toString()
         }
     }
 

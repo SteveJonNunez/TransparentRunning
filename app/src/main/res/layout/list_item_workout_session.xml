@@ -21,7 +21,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/workout_session_id"
+            android:id="@+id/workoutSessionIdTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingRight="8dp"
@@ -42,7 +42,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/workout_session_title"
+            android:id="@+id/workoutSessionTitleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingRight="8dp"
@@ -63,7 +63,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/workout_session_date"
+            android:id="@+id/workoutSessionDateTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Wed May 13 00:00:00 EDT 2020"/>
@@ -83,7 +83,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/workout_session_duration"
+            android:id="@+id/workoutSessionDurationTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingRight="8dp"
@@ -104,7 +104,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/workout_session_distance"
+            android:id="@+id/workoutSessionDistanceTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Wed May 13 00:00:00 EDT 2020"/>

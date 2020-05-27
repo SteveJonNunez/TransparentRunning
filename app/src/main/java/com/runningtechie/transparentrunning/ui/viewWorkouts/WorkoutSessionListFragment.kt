@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.runningtechie.transparentrunning.R
 import com.runningtechie.transparentrunning.model.WorkoutSession
+import kotlinx.android.synthetic.main.fragment_recycler_view_list.*
+import kotlinx.android.synthetic.main.list_item_workout_session.*
 
 class WorkoutSessionListFragment : Fragment() {
     interface Callbacks {
@@ -22,7 +24,6 @@ class WorkoutSessionListFragment : Fragment() {
     private var callbacks: Callbacks? = null
 
     private lateinit var workoutSessionListViewModel: WorkoutSessionListViewModel
-    private lateinit var workoutSessionRecyclerView: RecyclerView
     private var adapter: WorkoutSessionAdapter? = WorkoutSessionAdapter(emptyList())
 
     override fun onAttach(context: Context) {
@@ -40,9 +41,8 @@ class WorkoutSessionListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_recycler_view_list, container, false)
 
-        workoutSessionRecyclerView = view.findViewById(R.id.recycler_view) as RecyclerView
-        workoutSessionRecyclerView.layoutManager = LinearLayoutManager(context)
-        workoutSessionRecyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = adapter
         return view
     }
 
@@ -65,7 +65,7 @@ class WorkoutSessionListFragment : Fragment() {
 
     private fun updateUI(workoutSessions: List<WorkoutSession>) {
         adapter = WorkoutSessionAdapter(workoutSessions)
-        workoutSessionRecyclerView.adapter = adapter
+        recyclerView.adapter = adapter
     }
 
     companion object {
@@ -75,23 +75,17 @@ class WorkoutSessionListFragment : Fragment() {
     private inner class WorkoutSessionHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         private lateinit var workoutSession: WorkoutSession
 
-        private val idTextView: TextView = itemView.findViewById(R.id.workout_session_id)
-        private val titleTextView: TextView = itemView.findViewById(R.id.workout_session_title)
-        private val dateTextView: TextView = itemView.findViewById(R.id.workout_session_date)
-        private val durationTextView: TextView = itemView.findViewById(R.id.workout_session_duration)
-        private val distanceTextView: TextView = itemView.findViewById(R.id.workout_session_distance)
-
         init {
             itemView.setOnClickListener(this)
         }
 
         fun bind(workoutSession: WorkoutSession) {
             this.workoutSession = workoutSession
-            idTextView.text = workoutSession.id.toString()
-            titleTextView.text = workoutSession.title.toString()
-            dateTextView.text = workoutSession.date.toString()
-            durationTextView.text = workoutSession.duration.toString()
-            distanceTextView.text = workoutSession.distance.toString()
+            workoutSessionIdTextView.text = workoutSession.id.toString()
+            workoutSessionTitleTextView.text = workoutSession.title.toString()
+            workoutSessionDateTextView.text = workoutSession.date.toString()
+            workoutSessionDurationTextView.text = workoutSession.duration.toString()
+            workoutSessionDistanceTextView.text = workoutSession.distance.toString()
         }
 
         override fun onClick(v: View?) {

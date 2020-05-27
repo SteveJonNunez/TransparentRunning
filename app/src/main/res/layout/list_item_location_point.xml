@@ -20,7 +20,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/location_point_id"
+            android:id="@+id/locationPointIdTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingRight="8dp"
@@ -41,7 +41,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/location_point_workout_session_id"
+            android:id="@+id/workoutSessionIdTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingRight="8dp"
@@ -62,7 +62,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/location_point_time"
+            android:id="@+id/locationPointTimeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="Wed May 13 00:00:00 EDT 2020" />
@@ -83,7 +83,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/location_point_elapsed_time"
+            android:id="@+id/locationPointElapsedTimeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="1" />
@@ -104,7 +104,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/location_point_latitude"
+            android:id="@+id/locationPointLatitudeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="1" />
@@ -124,7 +124,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/location_point_logitude"
+            android:id="@+id/locationPointLongitudeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="1" />
@@ -144,7 +144,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/location_point_altitude"
+            android:id="@+id/locationPointAltitudeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="1" />
@@ -164,7 +164,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/location_point_speed"
+            android:id="@+id/locationPointSpeedTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="1" />
@@ -184,7 +184,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/location_point_elapsed_distance"
+            android:id="@+id/locationPointElapsedDistanceTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:text="1" />

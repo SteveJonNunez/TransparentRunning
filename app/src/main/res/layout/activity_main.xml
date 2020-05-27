@@ -20,13 +20,13 @@
         android:layout_width="wrap_content">
 
         <Button
-            android:id="@+id/start_button"
+            android:id="@+id/startButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/start_button"/>
 
         <Button
-            android:id="@+id/stop_button"
+            android:id="@+id/stopButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/stop_button"/>
@@ -34,7 +34,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/view_workout_button"
+        android:id="@+id/viewWorkoutsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/view_workout_button"/>

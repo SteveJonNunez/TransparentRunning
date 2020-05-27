@@ -2,13 +2,13 @@ package com.runningtechie.transparentrunning.ui
 
 import android.content.pm.PackageManager
 import android.os.*
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.runningtechie.transparentrunning.GPSForegroundService
 import com.runningtechie.transparentrunning.PermissionTool
 import com.runningtechie.transparentrunning.R
 import com.runningtechie.transparentrunning.database.TransparentRunningRepository
 import com.runningtechie.transparentrunning.model.WorkoutSession
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.Date
 
 
@@ -20,10 +20,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var handlerThread: HandlerThread
     private lateinit var backgroundHandler: Handler
     private lateinit var uiHandler: Handler
-
-    private lateinit var startButton: Button
-    private lateinit var stopButton: Button
-    private lateinit var viewWorkoutsButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +49,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupStopButton() {
-        stopButton = findViewById(R.id.stop_button)
         stopButton.setOnClickListener {
             GPSForegroundService.stopGpsForegroundService(
                 this
@@ -62,14 +57,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewWorkoutsButton() {
-        viewWorkoutsButton = findViewById(R.id.view_workout_button)
         viewWorkoutsButton.setOnClickListener {
             startActivity(WorkoutSessionActivity.newIntent(this@MainActivity))
         }
     }
 
     private fun setupStartButton() {
-        startButton = findViewById(R.id.start_button)
         startButton.setOnClickListener {
             if (PermissionTool.hasFineLocation(this))
                 startWorkout()
