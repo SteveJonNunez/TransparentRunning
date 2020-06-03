@@ -13,4 +13,14 @@ class TransparentRunningConverters {
     fun toDate(millisecondSinceEpoch: Long?): Date? {
         return millisecondSinceEpoch?.let { Date(it) }
     }
+
+    @TypeConverter
+    fun toFloat(doubleValue: Double?): Float? {
+        return doubleValue?.toFloat()
+    }
+
+    @TypeConverter
+    fun toDouble(floatValue: Float?): Double? {
+        return floatValue?.toDouble()
+    }
 }
