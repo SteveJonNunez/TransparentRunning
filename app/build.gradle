@@ -42,7 +42,9 @@ dependencies {
     implementation 'androidx.room:room-runtime:2.2.5'
     kapt 'androidx.room:room-compiler:2.2.5'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.6.2"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.6.2"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.6.2"
     testImplementation 'org.mockito:mockito-core:2.13.0'
     androidTestImplementation 'org.mockito:mockito-android:2.13.0'
     testImplementation "org.robolectric:robolectric:4.2.1"
