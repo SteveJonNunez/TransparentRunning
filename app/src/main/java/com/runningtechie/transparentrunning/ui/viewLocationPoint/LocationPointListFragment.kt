@@ -42,15 +42,13 @@ class LocationPointListFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_recycler_view_list, container, false)
-
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
-        return view
+        return inflater.inflate(R.layout.fragment_recycler_view_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = adapter
         locationPointListViewModel.locationPointListLiveData.observe(
             viewLifecycleOwner,
             Observer { locationPoints->
@@ -69,17 +67,27 @@ class LocationPointListFragment : Fragment() {
     private inner class LocationPointHolder(view: View) : RecyclerView.ViewHolder(view) {
         private lateinit var locationPoint: LocationPoint
 
+        private val locationPointIdTextView: TextView = itemView.findViewById(R.id.locationPointIdTextView)
+        private val workoutSessionIdTextView: TextView = itemView.findViewById(R.id.workoutSessionIdTextView)
+        private val timeTextView: TextView = itemView.findViewById(R.id.locationPointTimeTextView)
+        private val elapsedTimeTextView: TextView = itemView.findViewById(R.id.locationPointElapsedTimeTextView)
+        private val latitudeTextView: TextView = itemView.findViewById(R.id.locationPointLatitudeTextView)
+        private val longitudeTextView: TextView = itemView.findViewById(R.id.locationPointLongitudeTextView)
+        private val altitudeTextView: TextView = itemView.findViewById(R.id.locationPointAltitudeTextView)
+        private val speedTextView: TextView = itemView.findViewById(R.id.locationPointSpeedTextView)
+        private val elapsedDistanceTextView: TextView = itemView.findViewById(R.id.locationPointElapsedDistanceTextView)
+
         fun bind(locationPoint: LocationPoint) {
             this.locationPoint = locationPoint
             locationPointIdTextView.text = locationPoint.id.toString()
             workoutSessionIdTextView.text = locationPoint.sessionId.toString()
-            locationPointTimeTextView.text = locationPoint.time.toString()
-            locationPointElapsedTimeTextView.text = locationPoint.elapsedTime.toString()
-            locationPointLatitudeTextView.text = locationPoint.latitude.toString()
-            locationPointLongitudeTextView.text = locationPoint.longitude.toString()
-            locationPointAltitudeTextView.text = locationPoint.altitude.toString()
-            locationPointSpeedTextView.text = locationPoint.speed.toString()
-            locationPointElapsedDistanceTextView.text = locationPoint.elapsedDistance.toString()
+            timeTextView.text = locationPoint.time.toString()
+            elapsedTimeTextView.text = locationPoint.elapsedTime.toString()
+            latitudeTextView.text = locationPoint.latitude.toString()
+            longitudeTextView.text = locationPoint.longitude.toString()
+            altitudeTextView.text = locationPoint.altitude.toString()
+            speedTextView.text = locationPoint.speed.toString()
+            elapsedDistanceTextView.text = locationPoint.elapsedDistance.toString()
         }
     }
 

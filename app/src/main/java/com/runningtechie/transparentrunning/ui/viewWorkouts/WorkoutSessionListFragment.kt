@@ -39,15 +39,14 @@ class WorkoutSessionListFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_recycler_view_list, container, false)
-
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.adapter = adapter
-        return view
+        return inflater.inflate(R.layout.fragment_recycler_view_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = adapter
+
         workoutSessionListViewModel.workoutListLiveData.observe(
             viewLifecycleOwner,
             Observer { workoutSessions ->
@@ -75,17 +74,23 @@ class WorkoutSessionListFragment : Fragment() {
     private inner class WorkoutSessionHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         private lateinit var workoutSession: WorkoutSession
 
+        private val idTextView: TextView = itemView.findViewById(R.id.workoutSessionIdTextView)
+        private val titleTextView: TextView = itemView.findViewById(R.id.workoutSessionTitleTextView)
+        private val dateTextView: TextView = itemView.findViewById(R.id.workoutSessionDateTextView)
+        private val durationTextView: TextView = itemView.findViewById(R.id.workoutSessionDurationTextView)
+        private val distanceTextView: TextView = itemView.findViewById(R.id.workoutSessionDistanceTextView)
+
         init {
             itemView.setOnClickListener(this)
         }
 
         fun bind(workoutSession: WorkoutSession) {
             this.workoutSession = workoutSession
-            workoutSessionIdTextView.text = workoutSession.id.toString()
-            workoutSessionTitleTextView.text = workoutSession.title.toString()
-            workoutSessionDateTextView.text = workoutSession.date.toString()
-            workoutSessionDurationTextView.text = workoutSession.duration.toString()
-            workoutSessionDistanceTextView.text = workoutSession.distance.toString()
+            idTextView.text = workoutSession.id.toString()
+            titleTextView.text = workoutSession.title.toString()
+            dateTextView.text = workoutSession.date.toString()
+            durationTextView.text = workoutSession.duration.toString()
+            distanceTextView.text = workoutSession.distance.toString()
         }
 
         override fun onClick(v: View?) {
