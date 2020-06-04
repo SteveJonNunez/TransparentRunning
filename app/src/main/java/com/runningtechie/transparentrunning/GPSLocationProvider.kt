@@ -6,6 +6,7 @@ import com.google.android.gms.location.*
 import com.runningtechie.transparentrunning.database.TransparentRunningRepository
 import com.runningtechie.transparentrunning.model.Distance
 import com.runningtechie.transparentrunning.model.LocationPoint
+import com.runningtechie.transparentrunning.model.Speed
 import java.util.*
 
 class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundService: GPSForegroundService) {
@@ -72,7 +73,7 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
                 latitude = location.latitude,
                 longitude = location.longitude,
                 altitude = Distance(location.altitude.toFloat()),
-                speed = location.speed,
+                speed = Speed(location.speed),
                 elapsedDistance = Distance(elapsedDistance)
             )
         )

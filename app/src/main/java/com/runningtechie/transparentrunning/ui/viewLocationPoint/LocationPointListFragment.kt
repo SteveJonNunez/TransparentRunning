@@ -85,7 +85,7 @@ class LocationPointListFragment : Fragment() {
             latitudeTextView.text = locationPoint.latitude.toString()
             longitudeTextView.text = locationPoint.longitude.toString()
             altitudeTextView.text = locationPoint.altitude.milesString + getString(R.string.miles)
-            speedTextView.text = locationPoint.speed.toString()
+            speedTextView.text = locationPoint.speed.milesPerHourString + "mph"
             elapsedDistanceTextView.text = locationPoint.elapsedDistance.milesString + getString(R.string.miles)
         }
     }

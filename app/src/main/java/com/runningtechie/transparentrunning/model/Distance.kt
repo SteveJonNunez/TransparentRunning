@@ -1,22 +1,22 @@
 package com.runningtechie.transparentrunning.model
 
-import java.text.NumberFormat
+import com.runningtechie.transparentrunning.toFormattedString
 
 class Distance(val meters: Float) {
-    private val numberFormat: NumberFormat by lazy {
-        var numberFormat = NumberFormat.getInstance()
-        numberFormat.maximumFractionDigits = 2
-        numberFormat.minimumFractionDigits = 0
-        numberFormat
+    companion object {
+        const val meterToMile = 0.000621371f
+        const val meterToFeet = 0.3048f
+        const val meterToKilometer = 0.001f
+        const val meterToYard = 1.093613298f
     }
-    val miles by lazy { meters * 0.000621371f }
-    val feet by lazy { meters / 0.3048f }
-    val kilometers by lazy { meters * .001f }
-    val yards by lazy { meters * 1.093613298f }
+    val miles by lazy { meters * meterToMile }
+    val feet by lazy { meters / meterToFeet }
+    val kilometers by lazy { meters * meterToKilometer }
+    val yards by lazy { meters * meterToYard }
 
-    val metersString: String by lazy { numberFormat.format(meters) }
-    val milesString: String by lazy { numberFormat.format(miles) }
-    val feetString: String by lazy { numberFormat.format(feet) }
-    val kilometersString: String by lazy { numberFormat.format(kilometers) }
-    val yardsString: String by lazy { numberFormat.format(yards) }
+    val metersString: String by lazy { meters.toFormattedString() }
+    val milesString: String by lazy { miles.toFormattedString() }
+    val feetString: String by lazy { feet.toFormattedString() }
+    val kilometersString: String by lazy { kilometers.toFormattedString() }
+    val yardsString: String by lazy { yards.toFormattedString() }
 }

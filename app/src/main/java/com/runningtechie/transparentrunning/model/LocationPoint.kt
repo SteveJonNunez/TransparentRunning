@@ -24,6 +24,6 @@ data class LocationPoint(
     val latitude: Double,
     val longitude: Double,
     val altitude: Distance,
-    val speed: Float,
+    val speed: Speed,
     val elapsedDistance: Distance
 )
