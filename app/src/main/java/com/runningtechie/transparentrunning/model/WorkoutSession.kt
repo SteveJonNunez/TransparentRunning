@@ -10,5 +10,5 @@ data class WorkoutSession(
     var title: String,
     val date: Date,
     val duration: Int? = null,
-    val distance: Double? = null
+    val distance: Distance? = null
 )

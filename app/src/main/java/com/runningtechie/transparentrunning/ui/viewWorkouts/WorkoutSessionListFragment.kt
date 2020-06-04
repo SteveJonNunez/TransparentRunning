@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.runningtechie.transparentrunning.R
 import com.runningtechie.transparentrunning.model.WorkoutSession
 import kotlinx.android.synthetic.main.fragment_recycler_view_list.*
-import kotlinx.android.synthetic.main.list_item_workout_session.*
 
 class WorkoutSessionListFragment : Fragment() {
     interface Callbacks {
@@ -87,10 +86,10 @@ class WorkoutSessionListFragment : Fragment() {
         fun bind(workoutSession: WorkoutSession) {
             this.workoutSession = workoutSession
             idTextView.text = workoutSession.id.toString()
-            titleTextView.text = workoutSession.title.toString()
+            titleTextView.text = workoutSession.title
             dateTextView.text = workoutSession.date.toString()
             durationTextView.text = workoutSession.duration.toString()
-            distanceTextView.text = workoutSession.distance.toString()
+            distanceTextView.text = workoutSession.distance?.milesString + getString(R.string.miles)
         }
 
         override fun onClick(v: View?) {

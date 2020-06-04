@@ -19,11 +19,11 @@ import java.util.*
 data class LocationPoint(
     @PrimaryKey(autoGenerate = true) val id: Long? = null,
     val sessionId: Long,
-    val time: Long,
+    val time: Date,
     val elapsedTime: Long,
     val latitude: Double,
     val longitude: Double,
-    val altitude: Double,
+    val altitude: Distance,
     val speed: Float,
-    val elapsedDistance: Float
+    val elapsedDistance: Distance
 )

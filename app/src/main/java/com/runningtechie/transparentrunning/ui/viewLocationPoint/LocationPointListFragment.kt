@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.runningtechie.transparentrunning.R
 import com.runningtechie.transparentrunning.model.LocationPoint
 import kotlinx.android.synthetic.main.fragment_recycler_view_list.*
-import kotlinx.android.synthetic.main.list_item_location_point.*
 
 class LocationPointListFragment : Fragment() {
 
@@ -85,9 +84,9 @@ class LocationPointListFragment : Fragment() {
             elapsedTimeTextView.text = locationPoint.elapsedTime.toString()
             latitudeTextView.text = locationPoint.latitude.toString()
             longitudeTextView.text = locationPoint.longitude.toString()
-            altitudeTextView.text = locationPoint.altitude.toString()
+            altitudeTextView.text = locationPoint.altitude.milesString + getString(R.string.miles)
             speedTextView.text = locationPoint.speed.toString()
-            elapsedDistanceTextView.text = locationPoint.elapsedDistance.toString()
+            elapsedDistanceTextView.text = locationPoint.elapsedDistance.milesString + getString(R.string.miles)
         }
     }
 

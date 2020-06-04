@@ -1,26 +1,34 @@
 package com.runningtechie.transparentrunning.database
 
 import androidx.room.TypeConverter
+import com.runningtechie.transparentrunning.model.Distance
 import java.util.*
 
 class TransparentRunningConverters {
-    @TypeConverter
-    fun fromDate(date: Date?): Long? {
-        return date?.time
-    }
+    companion object {
 
-    @TypeConverter
-    fun toDate(millisecondSinceEpoch: Long?): Date? {
-        return millisecondSinceEpoch?.let { Date(it) }
-    }
+        @TypeConverter
+        @JvmStatic
+        fun fromDate(date: Date?): Long? {
+            return date?.time
+        }
 
-    @TypeConverter
-    fun toFloat(doubleValue: Double?): Float? {
-        return doubleValue?.toFloat()
-    }
+        @TypeConverter
+        @JvmStatic
+        fun toDate(millisecondSinceEpoch: Long?): Date? {
+            return millisecondSinceEpoch?.let { Date(it) }
+        }
 
-    @TypeConverter
-    fun toDouble(floatValue: Float?): Double? {
-        return floatValue?.toDouble()
+        @TypeConverter
+        @JvmStatic
+        fun fromDistance(distance: Distance?): Float? {
+            return distance?.meters
+        }
+
+        @TypeConverter
+        @JvmStatic
+        fun toDistance(distanceInMeters: Float?): Distance? {
+            return distanceInMeters?.let { Distance(it) }
+        }
     }
 }

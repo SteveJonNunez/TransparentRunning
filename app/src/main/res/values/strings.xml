@@ -3,4 +3,9 @@
     <string name="start_button">Start</string>
     <string name="stop_button">Stop</string>
     <string name="view_workout_button">View Workouts</string>
+
+    <string name="miles">mi</string>
+    <string name="feet">ft</string>
+    <string name="kilometers">km</string>
+    <string name="yards">yd</string>
 </resources>

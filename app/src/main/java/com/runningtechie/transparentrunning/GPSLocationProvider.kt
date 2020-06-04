@@ -1,9 +1,12 @@
 package com.runningtechie.transparentrunning
 
+import android.annotation.SuppressLint
 import android.location.Location
 import com.google.android.gms.location.*
 import com.runningtechie.transparentrunning.database.TransparentRunningRepository
+import com.runningtechie.transparentrunning.model.Distance
 import com.runningtechie.transparentrunning.model.LocationPoint
+import java.util.*
 
 class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundService: GPSForegroundService) {
     private var fusedLocationClient: FusedLocationProviderClient =
@@ -36,6 +39,7 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
     private var elapsedDistance: Float = 0.0F
     private var previousLocation: Location? = null
 
+    @SuppressLint("MissingPermission")
     fun startOngoingLocationUpdates() {
         fusedLocationClient.requestLocationUpdates(
             ongoingLocationRequest,
@@ -44,6 +48,7 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
         )
     }
 
+    @SuppressLint("MissingPermission")
     fun stopOngoingLocationUpdates() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
         fusedLocationClient.requestLocationUpdates(
@@ -62,13 +67,13 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
         TransparentRunningRepository.insertLocationPoint(
             LocationPoint(
                 sessionId = workoutSessionId,
-                time = location.time,
+                time = Date(location.time),
                 elapsedTime = location.time - startTime,
                 latitude = location.latitude,
                 longitude = location.longitude,
-                altitude = location.altitude,
+                altitude = Distance(location.altitude.toFloat()),
                 speed = location.speed,
-                elapsedDistance = elapsedDistance
+                elapsedDistance = Distance(elapsedDistance)
             )
         )
         previousLocation = location
