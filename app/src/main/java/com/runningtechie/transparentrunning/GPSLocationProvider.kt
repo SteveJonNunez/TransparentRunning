@@ -69,7 +69,7 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
             LocationPoint(
                 sessionId = workoutSessionId,
                 time = Date(location.time),
-                elapsedTime = location.time - startTime,
+                elapsedTime = (location.time - startTime),
                 latitude = location.latitude,
                 longitude = location.longitude,
                 altitude = Distance(location.altitude.toFloat()),

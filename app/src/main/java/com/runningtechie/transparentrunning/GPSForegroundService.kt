@@ -29,6 +29,7 @@ import com.google.android.gms.location.LocationResult
 import com.runningtechie.transparentrunning.database.TransparentRunningRepository
 import com.runningtechie.transparentrunning.model.LocationPoint
 import com.runningtechie.transparentrunning.ui.MainActivity
+import kotlin.time.ExperimentalTime
 
 
 const val CHANNEL_ID_STRING = "GPS_FOREGROUND_SERVICE"

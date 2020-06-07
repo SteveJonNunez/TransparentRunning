@@ -5,6 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.util.*
+import kotlin.time.ExperimentalTime
 
 @Entity(
     tableName = "LocationPoint",
