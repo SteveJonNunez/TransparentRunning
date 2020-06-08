@@ -3,6 +3,8 @@ package com.runningtechie.transparentrunning.database
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.runningtechie.transparentrunning.database.dao.LocationPointDao
 import com.runningtechie.transparentrunning.database.dao.WorkoutSessionDao
 import com.runningtechie.transparentrunning.database.dao.WorkoutSessionWithLocationPointsDao
@@ -22,11 +24,21 @@ class TransparentRunningRepository private constructor() {
                 context.applicationContext,
                 TransparentRunningDatabase::class.java,
                 DATABASE_NAME
-            ).build()
+            )
+                .addMigrations(MIGRATION_2_3)
+                .build()
 
             workoutSessionDao = database.workoutSessionDao()
             locationPointDao = database.locationPointDao()
             workoutSessionWithLocationPointsDao = database.workoutSessionWithLocationPointsDao()
+        }
+
+
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE INDEX index_WorkoutSession_id ON WorkoutSession(id);")
+                database.execSQL("CREATE INDEX index_LocationPoint_id ON LocationPoint(id);")
+            }
         }
 
         fun insertWorkoutSession(workoutSession: WorkoutSession): Long = workoutSessionDao.insert(workoutSession)
@@ -34,6 +46,7 @@ class TransparentRunningRepository private constructor() {
         fun getWorkoutSessions(): LiveData<List<WorkoutSession>> = workoutSessionDao.getAllWorkoutSessions()
         fun getLocationPoints(workoutSessionId: Long): LiveData<List<LocationPoint>> =
             locationPointDao.getAllLocationPoints(workoutSessionId)
+
         fun updateDurationAndTime(workoutSessionId: Long) = workoutSessionDao.updateDurationAndTime(workoutSessionId)
     }
 }
