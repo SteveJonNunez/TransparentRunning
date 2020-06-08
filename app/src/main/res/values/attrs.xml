@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LineGraph">
+        <attr name="lineText1" format="color" />
+        <attr name="lineWidth1" format="color" />
+
+
+    </declare-styleable>
+</resources>
