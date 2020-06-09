@@ -5,7 +5,9 @@ import com.runningtechie.transparentrunning.model.Distance
 import com.runningtechie.transparentrunning.model.Speed
 import java.util.*
 
-class TransparentRunningConverters {
+class TransparentRunningConverters
+private constructor() {
+
     companion object {
 
         @TypeConverter

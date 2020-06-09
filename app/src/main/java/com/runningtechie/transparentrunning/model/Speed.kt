@@ -3,10 +3,15 @@ package com.runningtechie.transparentrunning.model
 import com.runningtechie.transparentrunning.toFormattedString
 
 class Speed(val metersPerSecond: Float) {
-    val milesPerHour by lazy { metersPerSecond * 60 * 60 * Distance.meterToMile }
-    val kilometerPerHour by lazy { metersPerSecond * 60f * 60f * Distance.meterToKilometer }
-    val minutesPerMile by lazy { metersPerSecond * (1 / (60 * Distance.meterToMile)) }
-    val minutesPerKilometer by lazy { metersPerSecond * (1 / (60 * Distance.meterToKilometer)) }
+    companion object {
+        private const val secondsInAMinute = 60f
+        private const val minutesInAHour = 60f
+    }
+
+    val milesPerHour by lazy { metersPerSecond * secondsInAMinute * minutesInAHour * Distance.meterToMile }
+    val kilometerPerHour by lazy { metersPerSecond * secondsInAMinute * minutesInAHour * Distance.meterToKilometer }
+    val minutesPerMile by lazy { metersPerSecond * (1 / (secondsInAMinute * Distance.meterToMile)) }
+    val minutesPerKilometer by lazy { metersPerSecond * (1 / (secondsInAMinute * Distance.meterToKilometer)) }
 
     val metersPerSecondString: String by lazy { metersPerSecond.toFormattedString() }
     val milesPerHourString: String by lazy { milesPerHour.toFormattedString() }

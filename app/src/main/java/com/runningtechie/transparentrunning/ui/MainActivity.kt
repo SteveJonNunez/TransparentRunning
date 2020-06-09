@@ -1,7 +1,11 @@
 package com.runningtechie.transparentrunning.ui
 
 import android.content.pm.PackageManager
-import android.os.*
+import android.os.Handler
+import android.os.Message
+import android.os.Bundle
+import android.os.HandlerThread
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.runningtechie.transparentrunning.GPSForegroundService
 import com.runningtechie.transparentrunning.PermissionTool
