@@ -1,4 +1,4 @@
-name: Deteky Check
+name: Detekt Check
 # This workflow is triggered on pushes to the repository.
 on: [push]
 
@@ -14,6 +14,5 @@ jobs:
 
       - name: Detekt all
         uses: natiginfo/action-detekt-all@1.9.1
-
-
-
+        with:
+          args: --baseline detektBaseline.xml
