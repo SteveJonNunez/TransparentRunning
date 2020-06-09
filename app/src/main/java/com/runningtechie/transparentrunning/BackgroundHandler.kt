@@ -1,6 +1,9 @@
 package com.runningtechie.transparentrunning
 
-import android.os.*
+import android.os.Build
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Process
 
 class BackgroundHandler(threadName: String) {
     private var handlerThread: HandlerThread = HandlerThread(threadName, Process.THREAD_PRIORITY_BACKGROUND)

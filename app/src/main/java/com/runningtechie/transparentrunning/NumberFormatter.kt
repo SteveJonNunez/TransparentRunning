@@ -2,7 +2,7 @@ package com.runningtechie.transparentrunning
 
 import java.text.NumberFormat
 
-private class NumberFormatter {
+private class NumberFormatter private constructor() {
     companion object {
         private val numberFormat: NumberFormat by lazy {
             val numberFormat = NumberFormat.getInstance()

@@ -2,7 +2,11 @@ package com.runningtechie.transparentrunning
 
 import android.annotation.SuppressLint
 import android.location.Location
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 import com.runningtechie.transparentrunning.database.TransparentRunningRepository
 import com.runningtechie.transparentrunning.model.Distance
 import com.runningtechie.transparentrunning.model.LocationPoint
