@@ -3,6 +3,7 @@ package com.runningtechie.transparentrunning
 import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
+import android.os.Looper
 import android.os.Process
 
 class BackgroundHandler(threadName: String) {
@@ -14,7 +15,7 @@ class BackgroundHandler(threadName: String) {
         handler = Handler(handlerThread.looper)
     }
 
-    fun getLooper() = handlerThread.looper
+    fun getLooper(): Looper = handlerThread.looper
 
     fun quit() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {

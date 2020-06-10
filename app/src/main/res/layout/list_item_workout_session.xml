@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:padding="8dp">
 
     <LinearLayout
@@ -15,17 +14,22 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
             android:paddingEnd="4dp"
             android:paddingRight="4dp"
-            android:text="ID: "
+            android:text="@string/id_text"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/workoutSessionIdTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
+            android:paddingEnd="8dp"
             android:paddingRight="8dp"
-            tools:text="1"/>
+            tools:text="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -36,17 +40,22 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
             android:paddingEnd="4dp"
             android:paddingRight="4dp"
-            android:text="Title: "
+            android:text="@string/titleText"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/workoutSessionTitleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
+            android:paddingEnd="8dp"
             android:paddingRight="8dp"
-            tools:text="1"/>
+            tools:text="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -57,16 +66,18 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
             android:paddingEnd="4dp"
             android:paddingRight="4dp"
-            android:text="Date: "
+            android:text="@string/dateText"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/workoutSessionDateTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Wed May 13 00:00:00 EDT 2020"/>
+            tools:text="Wed May 13 00:00:00 EDT 2020" />
     </LinearLayout>
 
     <LinearLayout
@@ -77,17 +88,22 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
             android:paddingEnd="4dp"
             android:paddingRight="4dp"
-            android:text="Duration: "
+            android:text="@string/durationText"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/workoutSessionDurationTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
+            android:paddingEnd="8dp"
             android:paddingRight="8dp"
-            tools:text="1"/>
+            tools:text="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -98,16 +114,18 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
+            android:paddingLeft="0dp"
             android:paddingEnd="4dp"
             android:paddingRight="4dp"
-            android:text="Distance: "
+            android:text="@string/distanceText"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/workoutSessionDistanceTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Wed May 13 00:00:00 EDT 2020"/>
+            tools:text="Wed May 13 00:00:00 EDT 2020" />
     </LinearLayout>
 
 </LinearLayout>

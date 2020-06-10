@@ -4,8 +4,19 @@
     <string name="stop_button">Stop</string>
     <string name="view_workout_button">View Workouts</string>
 
-    <string name="miles">mi</string>
-    <string name="feet">ft</string>
-    <string name="kilometers">km</string>
-    <string name="yards">yd</string>
+    <string name="miles">%f mi</string>
+    <string name="mph">%f mph</string>
+    <string name="id_text">ID:</string>
+    <string name="session_id_text">Session ID:</string>
+    <string name="time_text">Time:</string>
+    <string name="elapsed_time_text">Elapsed Time:</string>
+    <string name="latitude_text">Latitude:</string>
+    <string name="longitude_text">Longitude:</string>
+    <string name="altitude_text">Altitude:</string>
+    <string name="speed_text">Speed:</string>
+    <string name="elapsed_distance_text">Elapsed distance:</string>
+    <string name="titleText">Title:</string>
+    <string name="dateText">Date:</string>
+    <string name="durationText">Duration:</string>
+    <string name="distanceText">Distance:</string>
 </resources>

@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import com.runningtechie.transparentrunning.model.WorkoutSession
-import com.runningtechie.transparentrunning.model.WorkoutSessionWithLocationPoints
 
 @Dao
 interface WorkoutSessionDao: BaseDao<WorkoutSession> {

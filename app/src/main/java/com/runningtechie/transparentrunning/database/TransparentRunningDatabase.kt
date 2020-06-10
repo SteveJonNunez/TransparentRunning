@@ -3,7 +3,6 @@ package com.runningtechie.transparentrunning.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.runningtechie.transparentrunning.database.TransparentRunningConverters
 import com.runningtechie.transparentrunning.database.dao.LocationPointDao
 import com.runningtechie.transparentrunning.database.dao.WorkoutSessionDao
 import com.runningtechie.transparentrunning.database.dao.WorkoutSessionWithLocationPointsDao
