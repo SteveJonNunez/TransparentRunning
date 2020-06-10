@@ -14,17 +14,21 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
             android:paddingEnd="4dp"
+            android:paddingLeft="0dp"
             android:paddingRight="4dp"
-            android:text="ID: "
+            android:text="@string/id_text"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/locationPointIdTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingRight="8dp"
-            tools:text="1" />
+            android:paddingStart="0dp"
+            android:paddingEnd="8dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="8dp"            tools:text="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -35,17 +39,21 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
             android:paddingEnd="4dp"
+            android:paddingLeft="0dp"
             android:paddingRight="4dp"
-            android:text="Session ID: "
+            android:text="@string/session_id_text"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/workoutSessionIdTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingRight="8dp"
-            tools:text="5" />
+            android:paddingStart="0dp"
+            android:paddingEnd="8dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="8dp"            tools:text="5" />
     </LinearLayout>
 
     <LinearLayout
@@ -56,9 +64,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
             android:paddingEnd="4dp"
+            android:paddingLeft="0dp"
             android:paddingRight="4dp"
-            android:text="Time: "
+            android:text="@string/time_text"
             android:textStyle="bold" />
 
         <TextView
@@ -77,9 +87,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
             android:paddingEnd="4dp"
+            android:paddingLeft="0dp"
             android:paddingRight="4dp"
-            android:text="Elapsed Time: "
+            android:text="@string/elapsed_time_text"
             android:textStyle="bold" />
 
         <TextView
@@ -98,9 +110,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
             android:paddingEnd="4dp"
+            android:paddingLeft="0dp"
             android:paddingRight="4dp"
-            android:text="Latitude: "
+            android:text="@string/latitude_text"
             android:textStyle="bold" />
 
         <TextView
@@ -118,9 +132,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
             android:paddingEnd="4dp"
+            android:paddingLeft="0dp"
             android:paddingRight="4dp"
-            android:text="Longitude: "
+            android:text="@string/longitude_text"
             android:textStyle="bold" />
 
         <TextView
@@ -138,9 +154,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
             android:paddingEnd="4dp"
+            android:paddingLeft="0dp"
             android:paddingRight="4dp"
-            android:text="Altitude: "
+            android:text="@string/altitude_text"
             android:textStyle="bold" />
 
         <TextView
@@ -158,9 +176,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
             android:paddingEnd="4dp"
+            android:paddingLeft="0dp"
             android:paddingRight="4dp"
-            android:text="Speed: "
+            android:text="@string/speed_text"
             android:textStyle="bold" />
 
         <TextView
@@ -178,9 +198,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
             android:paddingEnd="4dp"
+            android:paddingLeft="0dp"
             android:paddingRight="4dp"
-            android:text="Elapsed distance: "
+            android:text="@string/elapsed_distance_text"
             android:textStyle="bold" />
 
         <TextView
@@ -189,7 +211,4 @@
             android:layout_height="wrap_content"
             tools:text="1" />
     </LinearLayout>
-
-
-
 </LinearLayout>

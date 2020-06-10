@@ -89,7 +89,7 @@ class WorkoutSessionListFragment : Fragment() {
             titleTextView.text = workoutSession.title
             dateTextView.text = workoutSession.date.toString()
             durationTextView.text = workoutSession.duration?.toString()
-            distanceTextView.text = workoutSession.distance?.milesString + getString(R.string.miles)
+            distanceTextView.text = resources.getString(R.string.miles, workoutSession.distance?.miles)
         }
 
         override fun onClick(v: View?) {

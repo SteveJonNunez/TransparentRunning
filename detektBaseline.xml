@@ -1,6 +1,5 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
-  <Blacklist></Blacklist>
   <Whitelist>
     <ID>MagicNumber:TransparentRunningRepository.kt$TransparentRunningRepository.Companion.&lt;no name provided&gt;$3</ID>
     <ID>TooManyFunctions:GPSForegroundService.kt$GPSForegroundService$GPSForegroundService</ID>
