@@ -27,7 +27,7 @@ data class LocationPoint(
     val time: Date,
 
     @ColumnInfo(name= "elapsedTime", typeAffinity = ColumnInfo.INTEGER, index = false)
-    val elapsedTime: Long,
+    val elapsedTime: Duration,
 
     @ColumnInfo(name= "latitude", typeAffinity = ColumnInfo.REAL, index = false)
     val latitude: Double,

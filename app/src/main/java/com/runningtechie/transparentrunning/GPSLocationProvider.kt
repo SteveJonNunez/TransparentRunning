@@ -9,6 +9,7 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.runningtechie.transparentrunning.database.TransparentRunningRepository
 import com.runningtechie.transparentrunning.model.Distance
+import com.runningtechie.transparentrunning.model.Duration
 import com.runningtechie.transparentrunning.model.LocationPoint
 import com.runningtechie.transparentrunning.model.Speed
 import java.util.*
@@ -73,7 +74,7 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
             LocationPoint(
                 sessionId = workoutSessionId,
                 time = Date(location.time),
-                elapsedTime = (location.time - startTime),
+                elapsedTime = Duration.ofMilliseconds(location.time - startTime),
                 latitude = location.latitude,
                 longitude = location.longitude,
                 altitude = Distance(location.altitude.toFloat()),
