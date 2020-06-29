@@ -11,6 +11,9 @@ interface WorkoutSessionDao: BaseDao<WorkoutSession> {
     @Query("SELECT * FROM WorkoutSession")
     fun getAllWorkoutSessions(): LiveData<List<WorkoutSession>>
 
+    @Query("SELECT * FROM WorkoutSession")
+    fun getAllWorkoutSessionsAsync(): List<WorkoutSession>
+
     @Query("SELECT * FROM WorkoutSession WHERE id=(:id)")
     fun getWorkoutSession(id: Long): WorkoutSession
 

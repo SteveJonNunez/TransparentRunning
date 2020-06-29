@@ -19,4 +19,6 @@
     <string name="dateText">Date:</string>
     <string name="durationText">Duration:</string>
     <string name="distanceText">Distance:</string>
+    <string name="rounded_elapsed_time">Rounded Elapsed Time:</string>
+    <string name="is_simulated">Is Simulated:</string>
 </resources>

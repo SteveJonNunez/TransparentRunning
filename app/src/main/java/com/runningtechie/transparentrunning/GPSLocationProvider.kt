@@ -13,6 +13,7 @@ import com.runningtechie.transparentrunning.model.Duration
 import com.runningtechie.transparentrunning.model.LocationPoint
 import com.runningtechie.transparentrunning.model.Speed
 import java.util.*
+import kotlin.math.round
 
 class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundService: GPSForegroundService) {
     private var fusedLocationClient: FusedLocationProviderClient =
@@ -43,7 +44,8 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
 
     private var startTime: Long = 0L
     private var elapsedDistance: Float = 0.0F
-    private var previousLocation: Location? = null
+    private var previousLocationPoint: LocationPoint =
+        LocationPoint(null, 0, Date(), Duration.ofMilliseconds(0), Duration.ofMilliseconds(0), 0.0, 0.0, Distance(0f), Speed(0f), Distance(0f), true)
 
     @SuppressLint("MissingPermission")
     fun startOngoingLocationUpdates() {
@@ -64,25 +66,41 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
         )
     }
 
-    private fun insertLocationPoint(location: Location) {
-        if (previousLocation != null)
-            elapsedDistance += location.distanceTo(previousLocation)
-        else
-            startTime = location.time
-
-        TransparentRunningRepository.insertLocationPoint(
-            LocationPoint(
-                sessionId = workoutSessionId,
-                time = Date(location.time),
-                elapsedTime = Duration.ofMilliseconds(location.time - startTime),
-                latitude = location.latitude,
-                longitude = location.longitude,
-                altitude = Distance(location.altitude.toFloat()),
-                speed = Speed(location.speed),
-                elapsedDistance = Distance(elapsedDistance)
+    private fun insertLocationPoint(currentLocation: Location) {
+        var elapsedTimeFromPreviousLocation = 0L
+        if (previousLocationPoint.id != null) {
+            val results = FloatArray(3)
+            Location.distanceBetween(
+                previousLocationPoint.latitude, previousLocationPoint.longitude,
+                currentLocation.latitude, currentLocation.longitude,
+                results
             )
+            elapsedDistance = results[0]
+        } else
+            startTime = currentLocation.time
+
+        val elapsedTime = Duration.ofMilliseconds(currentLocation.time - startTime)
+
+        val locationPoint = LocationPoint(
+            sessionId = workoutSessionId,
+            time = Date(currentLocation.time),
+            elapsedTime = elapsedTime,
+            roundedElapsedTime = Duration.ofMilliseconds((round(elapsedTime.milliseconds / 100.0) * 100).toLong()),
+            latitude = currentLocation.latitude,
+            longitude = currentLocation.longitude,
+            altitude = Distance(currentLocation.altitude.toFloat()),
+            speed = Speed(currentLocation.speed),
+            elapsedDistance = Distance(elapsedDistance),
+            isSimulated = false
         )
-        previousLocation = location
+        TransparentRunningRepository.insertLocationPoint(locationPoint)
+
+        elapsedTimeFromPreviousLocation = locationPoint.roundedElapsedTime.milliseconds - previousLocationPoint.roundedElapsedTime.milliseconds
+        if (elapsedTimeFromPreviousLocation >= FASTEST_INTERVAL_TIME + 500L) {
+
+        }
+
+        previousLocationPoint = locationPoint
     }
 
     private fun updateWorkoutSessionDurationAndTime() {
@@ -93,6 +111,7 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
         val locationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = INTERVAL_TIME
+        locationRequest.fastestInterval = FASTEST_INTERVAL_TIME
         return locationRequest
     }
 
@@ -104,7 +123,8 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
     }
 
     companion object {
-        private const val INTERVAL_TIME: Long = 10 * 1000
+        const val INTERVAL_TIME: Long = 5 * 1000
+        const val FASTEST_INTERVAL_TIME: Long = 1 * 1000
     }
 
 }

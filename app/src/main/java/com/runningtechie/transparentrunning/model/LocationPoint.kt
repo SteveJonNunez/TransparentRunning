@@ -29,6 +29,9 @@ data class LocationPoint(
     @ColumnInfo(name= "elapsedTime", typeAffinity = ColumnInfo.INTEGER, index = false)
     val elapsedTime: Duration,
 
+    @ColumnInfo(name= "roundedElapsedTime", typeAffinity = ColumnInfo.INTEGER, index = false)
+    val roundedElapsedTime: Duration,
+
     @ColumnInfo(name= "latitude", typeAffinity = ColumnInfo.REAL, index = false)
     val latitude: Double,
 
@@ -42,5 +45,8 @@ data class LocationPoint(
     val speed: Speed,
 
     @ColumnInfo(name= "elapsedDistance", typeAffinity = ColumnInfo.REAL, index = false)
-    val elapsedDistance: Distance
+    val elapsedDistance: Distance,
+
+    @ColumnInfo(name= "isSimulated", typeAffinity = ColumnInfo.INTEGER, index = false)
+    val isSimulated: Boolean
 )

@@ -75,6 +75,8 @@ class LocationPointListFragment : Fragment() {
         private val altitudeTextView: TextView = itemView.findViewById(R.id.locationPointAltitudeTextView)
         private val speedTextView: TextView = itemView.findViewById(R.id.locationPointSpeedTextView)
         private val elapsedDistanceTextView: TextView = itemView.findViewById(R.id.locationPointElapsedDistanceTextView)
+        private val roundedElapsedTimeTextView: TextView = itemView.findViewById(R.id.roundedElapsedTimeTextView)
+        private val isSimulatedTextView: TextView = itemView.findViewById(R.id.isSimulatedTextView)
 
         fun bind(locationPoint: LocationPoint) {
             this.locationPoint = locationPoint
@@ -87,6 +89,8 @@ class LocationPointListFragment : Fragment() {
             altitudeTextView.text = resources.getString(R.string.miles, locationPoint.altitude.miles)
             speedTextView.text = resources.getString(R.string.mph, locationPoint.speed.milesPerHour)
             elapsedDistanceTextView.text = resources.getString(R.string.miles, locationPoint.elapsedDistance.miles)
+            roundedElapsedTimeTextView.text = locationPoint.roundedElapsedTime.toString()
+            isSimulatedTextView.text = locationPoint.isSimulated.toString()
         }
     }
 
