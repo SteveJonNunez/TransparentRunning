@@ -45,17 +45,8 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
 
     private var startTime: Long = 0L
     private var elapsedDistance: Float = 0.0F
-    private var previousLocationPoint: LocationPoint =
-        LocationPoint(
-            sessionId = 0,
-            time = Date(),
-            elapsedTime = Duration.ofMilliseconds(0),
-            roundedElapsedTime = Duration.ofMilliseconds(0),
-            latitude = 0.0,
-            longitude = 0.0,
-            elapsedDistance = Distance(0f),
-            isSimulated = true
-        )
+    private var previousLocationPoint: LocationPoint? = null
+
 
     @SuppressLint("MissingPermission")
     fun startOngoingLocationUpdates() {
@@ -77,10 +68,10 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
     }
 
     private fun insertLocationPoint(currentLocation: Location) {
-        if (previousLocationPoint.id != null) {
+        if (previousLocationPoint != null) {
             val results = FloatArray(3)
             Location.distanceBetween(
-                previousLocationPoint.latitude, previousLocationPoint.longitude,
+                previousLocationPoint!!.latitude, previousLocationPoint!!.longitude,
                 currentLocation.latitude, currentLocation.longitude,
                 results
             )
