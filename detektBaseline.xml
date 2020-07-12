@@ -6,6 +6,7 @@
     <ID>MagicNumber:GPSLocationProvider.kt$GPSLocationProvider$3</ID>
     <ID>MagicNumber:TransparentRunningRepository.kt$TransparentRunningRepository.Companion.&lt;no name provided&gt;$3</ID>
     <ID>MagicNumber:TransparentRunningRepository.kt$TransparentRunningRepository.Companion.&lt;no name provided&gt;$4</ID>
+    <ID>MagicNumber:TransparentRunningRepository.kt$TransparentRunningRepository.Companion.&lt;no name provided&gt;$5</ID>
     <ID>MaxLineLength:TransparentRunningRepository.kt$TransparentRunningRepository.Companion.&lt;no name provided&gt;$" \t\t\t\tLEFT JOIN LocationPoint lp ON lp.roundedElapsedTime = xvt.xVal AND lp.sessionId = ${id}\n"</ID>
     <ID>MaxLineLength:TransparentRunningRepository.kt$TransparentRunningRepository.Companion.&lt;no name provided&gt;$"INSERT INTO LocationPoint(sessionId, time, elapsedTime, latitude, longitude, altitude, speed, elapsedDistance, roundedElapsedTime, isSimulated)\n"</ID>
     <ID>MaxLineLength:TransparentRunningRepository.kt$TransparentRunningRepository.Companion.&lt;no name provided&gt;$"\t\tELSE CAST(minElapsedTime-(minElapsedTime-maxElapsedTime*1.0)/(minRoundedElapsedTime-maxRoundedElapsedTime)*(minRoundedElapsedTime-xVal) AS INT)\n"</ID>

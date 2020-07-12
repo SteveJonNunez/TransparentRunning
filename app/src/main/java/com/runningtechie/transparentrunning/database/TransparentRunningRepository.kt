@@ -23,11 +23,18 @@ class TransparentRunningRepository private constructor() {
                 TransparentRunningDatabase::class.java,
                 DATABASE_NAME
             )
+                .addMigrations(MIGRATION_4_5)
                 .addMigrations(MIGRATION_3_4)
                 .build()
 
             workoutSessionDao = database.workoutSessionDao()
             locationPointDao = database.locationPointDao()
+        }
+
+        private val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE LocationPoint ADD gpsAccuracy REAL NOT NULL default 0")
+            }
         }
 
         private val MIGRATION_3_4 = object : Migration(3, 4) {

@@ -56,7 +56,8 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
             Distance(0f),
             Speed(0f),
             Distance(0f),
-            true
+            true,
+            0f
         )
 
     @SuppressLint("MissingPermission")
@@ -105,7 +106,8 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
             altitude = Distance(currentLocation.altitude.toFloat()),
             speed = Speed(currentLocation.speed),
             elapsedDistance = Distance(elapsedDistance),
-            isSimulated = false
+            isSimulated = false,
+            gpsAccuracy = currentLocation.accuracy
         )
         TransparentRunningRepository.insertLocationPoint(locationPoint)
 

@@ -255,4 +255,26 @@
             android:layout_height="wrap_content"
             tools:text="1" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="0dp"
+            android:paddingEnd="4dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="4dp"
+            android:text="@string/gps_accuracy"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/gpsAccuracyTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="0.0" />
+    </LinearLayout>
 </LinearLayout>

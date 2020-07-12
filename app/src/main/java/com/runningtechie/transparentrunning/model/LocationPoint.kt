@@ -48,5 +48,8 @@ data class LocationPoint(
     val elapsedDistance: Distance,
 
     @ColumnInfo(name= "isSimulated", typeAffinity = ColumnInfo.INTEGER, index = false)
-    val isSimulated: Boolean
+    val isSimulated: Boolean,
+
+    @ColumnInfo(name= "gpsAccuracy", typeAffinity = ColumnInfo.REAL, index = false)
+    val gpsAccuracy: Float
 )
