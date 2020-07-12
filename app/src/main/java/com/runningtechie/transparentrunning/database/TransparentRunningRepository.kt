@@ -23,12 +23,23 @@ class TransparentRunningRepository private constructor() {
                 TransparentRunningDatabase::class.java,
                 DATABASE_NAME
             )
+                .addMigrations(MIGRATION_5_6)
                 .addMigrations(MIGRATION_4_5)
                 .addMigrations(MIGRATION_3_4)
                 .build()
 
             workoutSessionDao = database.workoutSessionDao()
             locationPointDao = database.locationPointDao()
+        }
+
+        private val MIGRATION_5_6 = object : Migration(5, 6) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE LocationPoint RENAME TO LocationPointTemp")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `LocationPoint` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `sessionId` INTEGER NOT NULL, `time` INTEGER NOT NULL, `elapsedTime` INTEGER NOT NULL, `roundedElapsedTime` INTEGER NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `altitude` REAL NULL, `speed` REAL NULL, `bearing` REAL NULL, `elapsedDistance` REAL NOT NULL, `horizontalAccuracy` REAL NULL, `verticalAccuracy` REAL NULL, `speedAccuracy` REAL NULL, `bearingAccuracy` REAL NULL, `isSimulated` INTEGER NOT NULL, FOREIGN KEY(`sessionId`) REFERENCES `WorkoutSession`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                database.execSQL("INSERT INTO LocationPoint(`id`, `sessionId`, `time`, `elapsedTime`, `roundedElapsedTime`, `latitude`, `longitude`, `altitude`, `speed`, `elapsedDistance`, `isSimulated` ) SELECT `id`, `sessionId`, `time`, `elapsedTime`, `roundedElapsedTime`, `latitude`, `longitude`, `altitude`, `speed`, `elapsedDistance`, `isSimulated`  FROM LocationPointTemp")
+                database.execSQL("DROP TABLE LocationPointTemp")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_LocationPoint_sessionId` ON `LocationPoint` (`sessionId`)")
+            }
         }
 
         private val MIGRATION_4_5 = object : Migration(4, 5) {

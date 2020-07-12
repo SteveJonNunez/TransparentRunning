@@ -70,14 +70,19 @@ class LocationPointListFragment : Fragment() {
         private val workoutSessionIdTextView: TextView = itemView.findViewById(R.id.workoutSessionIdTextView)
         private val timeTextView: TextView = itemView.findViewById(R.id.locationPointTimeTextView)
         private val elapsedTimeTextView: TextView = itemView.findViewById(R.id.locationPointElapsedTimeTextView)
+        private val roundedElapsedTimeTextView: TextView = itemView.findViewById(R.id.locationPointRoundedElapsedTimeTextView)
         private val latitudeTextView: TextView = itemView.findViewById(R.id.locationPointLatitudeTextView)
         private val longitudeTextView: TextView = itemView.findViewById(R.id.locationPointLongitudeTextView)
         private val altitudeTextView: TextView = itemView.findViewById(R.id.locationPointAltitudeTextView)
         private val speedTextView: TextView = itemView.findViewById(R.id.locationPointSpeedTextView)
+        private val bearingTextView: TextView = itemView.findViewById(R.id.locationPointBearingTextView)
         private val elapsedDistanceTextView: TextView = itemView.findViewById(R.id.locationPointElapsedDistanceTextView)
-        private val roundedElapsedTimeTextView: TextView = itemView.findViewById(R.id.roundedElapsedTimeTextView)
+        private val horizontalAccuracyTextView: TextView = itemView.findViewById(R.id.locationPointHorizontalAccuracyTextView)
+        private val verticalAccuracyTextView: TextView = itemView.findViewById(R.id.locationPointVerticalAccuracyTextView)
+        private val speedAccuracyTextView: TextView = itemView.findViewById(R.id.locationPointSpeedAccuracyTextView)
+        private val bearingAccuracyTextView: TextView = itemView.findViewById(R.id.locationPointBearingAccuracyTextView)
+
         private val isSimulatedTextView: TextView = itemView.findViewById(R.id.isSimulatedTextView)
-        private val gpsAccuracyTextView: TextView = itemView.findViewById(R.id.gpsAccuracyTextView)
 
         fun bind(locationPoint: LocationPoint) {
             this.locationPoint = locationPoint
@@ -85,14 +90,18 @@ class LocationPointListFragment : Fragment() {
             workoutSessionIdTextView.text = locationPoint.sessionId.toString()
             timeTextView.text = locationPoint.time.toString()
             elapsedTimeTextView.text = locationPoint.elapsedTime.toString()
+            roundedElapsedTimeTextView.text = locationPoint.roundedElapsedTime.toString()
             latitudeTextView.text = locationPoint.latitude.toString()
             longitudeTextView.text = locationPoint.longitude.toString()
-            altitudeTextView.text = resources.getString(R.string.miles, locationPoint.altitude.miles)
-            speedTextView.text = resources.getString(R.string.mph, locationPoint.speed.milesPerHour)
+            altitudeTextView.text = resources.getString(R.string.miles, locationPoint.altitude?.miles)
+            speedTextView.text = resources.getString(R.string.mph, locationPoint.speed?.milesPerHour)
+            bearingTextView.text = locationPoint.bearing.toString()
             elapsedDistanceTextView.text = resources.getString(R.string.miles, locationPoint.elapsedDistance.miles)
-            roundedElapsedTimeTextView.text = locationPoint.roundedElapsedTime.toString()
             isSimulatedTextView.text = locationPoint.isSimulated.toString()
-            gpsAccuracyTextView.text = locationPoint.gpsAccuracy.toString()
+            horizontalAccuracyTextView.text = locationPoint.horizontalAccuracy.toString()
+            verticalAccuracyTextView.text = locationPoint.verticalAccuracy.toString()
+            speedAccuracyTextView.text = locationPoint.speedAccuracy.toString()
+            bearingAccuracyTextView.text = locationPoint.bearingAccuracy.toString()
         }
     }
 

@@ -17,7 +17,7 @@ import java.util.*
 )
 data class LocationPoint(
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name= "id", typeAffinity = ColumnInfo.INTEGER, index = true)
+    @ColumnInfo(name= "id", typeAffinity = ColumnInfo.INTEGER)
     val id: Long? = null,
 
     @ColumnInfo(name= "sessionId", typeAffinity = ColumnInfo.INTEGER, index = true)
@@ -39,17 +39,29 @@ data class LocationPoint(
     val longitude: Double,
 
     @ColumnInfo(name= "altitude", typeAffinity = ColumnInfo.REAL, index = false)
-    val altitude: Distance,
+    val altitude: Distance? = null,
 
     @ColumnInfo(name= "speed", typeAffinity = ColumnInfo.REAL, index = false)
-    val speed: Speed,
+    val speed: Speed? = null,
+
+    @ColumnInfo(name= "bearing", typeAffinity = ColumnInfo.REAL, index = false)
+    val bearing: Float? = null,
 
     @ColumnInfo(name= "elapsedDistance", typeAffinity = ColumnInfo.REAL, index = false)
     val elapsedDistance: Distance,
 
-    @ColumnInfo(name= "isSimulated", typeAffinity = ColumnInfo.INTEGER, index = false)
-    val isSimulated: Boolean,
+    @ColumnInfo(name= "horizontalAccuracy", typeAffinity = ColumnInfo.REAL, index = false)
+    val horizontalAccuracy: Float? = null,
 
-    @ColumnInfo(name= "gpsAccuracy", typeAffinity = ColumnInfo.REAL, index = false)
-    val gpsAccuracy: Float
+    @ColumnInfo(name= "verticalAccuracy", typeAffinity = ColumnInfo.REAL, index = false)
+    val verticalAccuracy: Float? = null,
+
+    @ColumnInfo(name= "speedAccuracy", typeAffinity = ColumnInfo.REAL, index = false)
+    val speedAccuracy: Float? = null,
+
+    @ColumnInfo(name= "bearingAccuracy", typeAffinity = ColumnInfo.REAL, index = false)
+    val bearingAccuracy: Float? = null,
+
+    @ColumnInfo(name= "isSimulated", typeAffinity = ColumnInfo.INTEGER, index = false)
+    val isSimulated: Boolean
 )

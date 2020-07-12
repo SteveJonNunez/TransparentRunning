@@ -2,6 +2,7 @@ package com.runningtechie.transparentrunning
 
 import android.annotation.SuppressLint
 import android.location.Location
+import android.os.Build
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -46,18 +47,14 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
     private var elapsedDistance: Float = 0.0F
     private var previousLocationPoint: LocationPoint =
         LocationPoint(
-            null,
-            0,
-            Date(),
-            Duration.ofMilliseconds(0),
-            Duration.ofMilliseconds(0),
-            0.0,
-            0.0,
-            Distance(0f),
-            Speed(0f),
-            Distance(0f),
-            true,
-            0f
+            sessionId = 0,
+            time = Date(),
+            elapsedTime = Duration.ofMilliseconds(0),
+            roundedElapsedTime = Duration.ofMilliseconds(0),
+            latitude = 0.0,
+            longitude = 0.0,
+            elapsedDistance = Distance(0f),
+            isSimulated = true
         )
 
     @SuppressLint("MissingPermission")
@@ -103,11 +100,21 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
             ),
             latitude = currentLocation.latitude,
             longitude = currentLocation.longitude,
-            altitude = Distance(currentLocation.altitude.toFloat()),
-            speed = Speed(currentLocation.speed),
+            altitude = if (currentLocation.hasAltitude()) Distance(currentLocation.altitude.toFloat()) else null,
+            speed = if (currentLocation.hasSpeed()) Speed(currentLocation.speed) else null,
+            bearing = if (currentLocation.hasBearing()) currentLocation.bearing else null,
             elapsedDistance = Distance(elapsedDistance),
-            isSimulated = false,
-            gpsAccuracy = currentLocation.accuracy
+            horizontalAccuracy = if (currentLocation.hasAccuracy()) currentLocation.accuracy else null,
+            verticalAccuracy = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (currentLocation.hasVerticalAccuracy()) currentLocation.verticalAccuracyMeters else null
+            } else null,
+            speedAccuracy = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (currentLocation.hasSpeedAccuracy()) currentLocation.speedAccuracyMetersPerSecond else null
+            } else null,
+            bearingAccuracy = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (currentLocation.hasBearingAccuracy()) currentLocation.bearingAccuracyDegrees else null
+            } else null,
+            isSimulated = false
         )
         TransparentRunningRepository.insertLocationPoint(locationPoint)
 

@@ -21,5 +21,9 @@
     <string name="distanceText">Distance:</string>
     <string name="rounded_elapsed_time">Rounded Elapsed Time:</string>
     <string name="is_simulated">Is Simulated:</string>
-    <string name="gps_accuracy">GPS Accuracy:</string>
+    <string name="horizontal_accuracy">Horizontal Accuracy:</string>
+    <string name="vertical_accuracy">Vertical Accuracy:</string>
+    <string name="speed_accuracy">Speed Accuracy:</string>
+    <string name="bearing_accuracy">Bearing Accuracy:</string>
+    <string name="bearing_text">Bearing:</string>
 </resources>
