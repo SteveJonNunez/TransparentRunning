@@ -45,7 +45,19 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
     private var startTime: Long = 0L
     private var elapsedDistance: Float = 0.0F
     private var previousLocationPoint: LocationPoint =
-        LocationPoint(null, 0, Date(), Duration.ofMilliseconds(0), Duration.ofMilliseconds(0), 0.0, 0.0, Distance(0f), Speed(0f), Distance(0f), true)
+        LocationPoint(
+            null,
+            0,
+            Date(),
+            Duration.ofMilliseconds(0),
+            Duration.ofMilliseconds(0),
+            0.0,
+            0.0,
+            Distance(0f),
+            Speed(0f),
+            Distance(0f),
+            true
+        )
 
     @SuppressLint("MissingPermission")
     fun startOngoingLocationUpdates() {
@@ -67,7 +79,6 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
     }
 
     private fun insertLocationPoint(currentLocation: Location) {
-        var elapsedTimeFromPreviousLocation = 0L
         if (previousLocationPoint.id != null) {
             val results = FloatArray(3)
             Location.distanceBetween(
@@ -85,7 +96,10 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
             sessionId = workoutSessionId,
             time = Date(currentLocation.time),
             elapsedTime = elapsedTime,
-            roundedElapsedTime = Duration.ofMilliseconds((round(elapsedTime.milliseconds / 100.0) * 100).toLong()),
+            roundedElapsedTime = Duration.ofMilliseconds(
+                (round(elapsedTime.milliseconds / MILLISECONDS_IN_SECONDS_DOUBLE)
+                        * MILLISECONDS_IN_SECONDS_INT).toLong()
+            ),
             latitude = currentLocation.latitude,
             longitude = currentLocation.longitude,
             altitude = Distance(currentLocation.altitude.toFloat()),
@@ -94,11 +108,6 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
             isSimulated = false
         )
         TransparentRunningRepository.insertLocationPoint(locationPoint)
-
-        elapsedTimeFromPreviousLocation = locationPoint.roundedElapsedTime.milliseconds - previousLocationPoint.roundedElapsedTime.milliseconds
-        if (elapsedTimeFromPreviousLocation >= FASTEST_INTERVAL_TIME + 500L) {
-
-        }
 
         previousLocationPoint = locationPoint
     }
@@ -125,6 +134,8 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
     companion object {
         const val INTERVAL_TIME: Long = 5 * 1000
         const val FASTEST_INTERVAL_TIME: Long = 1 * 1000
+        const val MILLISECONDS_IN_SECONDS_DOUBLE: Double = 1000.0
+        const val MILLISECONDS_IN_SECONDS_INT: Int = 1000
     }
 
 }

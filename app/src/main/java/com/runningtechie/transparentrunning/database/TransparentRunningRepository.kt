@@ -248,7 +248,7 @@ class TransparentRunningRepository private constructor() {
                                 "  \t\t\t\tLEFT JOIN LocationPoint lp ON lp.roundedElapsedTime = xvt.xVal AND lp.sessionId = ${id}\n" +
                                 "\t\t)\n" +
                                 "INSERT INTO LocationPoint(sessionId, time, elapsedTime, latitude, longitude, altitude, speed, elapsedDistance, roundedElapsedTime, isSimulated)\n" +
-                                "SELECT ${id} AS sessionId, \n" +
+                                "SELECT $id AS sessionId, \n" +
                                 "\tCASE \n" +
                                 "\t\tWHEN id IS NOT NULL THEN time\n" +
                                 "\t\tELSE CAST(minTime-(minTime-maxTime*1.0)/(minRoundedElapsedTime-maxRoundedElapsedTime)*(minRoundedElapsedTime-xVal) AS INT)\n" +
