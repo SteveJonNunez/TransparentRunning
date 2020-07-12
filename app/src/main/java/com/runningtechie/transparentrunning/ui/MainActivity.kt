@@ -1,11 +1,11 @@
 package com.runningtechie.transparentrunning.ui
 
 import android.content.pm.PackageManager
-import android.os.Handler
-import android.os.Message
 import android.os.Bundle
+import android.os.Handler
 import android.os.HandlerThread
 import android.os.Looper
+import android.os.Message
 import androidx.appcompat.app.AppCompatActivity
 import com.runningtechie.transparentrunning.GPSForegroundService
 import com.runningtechie.transparentrunning.PermissionTool
@@ -14,7 +14,7 @@ import com.runningtechie.transparentrunning.customView.DataPoint
 import com.runningtechie.transparentrunning.database.TransparentRunningRepository
 import com.runningtechie.transparentrunning.model.WorkoutSession
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.Date
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun createUiHandler() {
         uiHandler = object : Handler(Looper.getMainLooper()) {
-            override fun handleMessage(message: Message?) {
+            override fun handleMessage(message: Message) {
                 super.handleMessage(message)
                 if (message != null) {
                     when (message.what) {

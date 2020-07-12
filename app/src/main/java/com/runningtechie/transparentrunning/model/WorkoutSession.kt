@@ -18,7 +18,7 @@ data class WorkoutSession(
     val date: Date,
 
     @ColumnInfo(name= "duration", typeAffinity = ColumnInfo.INTEGER, index = false)
-    val duration: Int? = null,
+    val duration: Duration? = null,
 
     @ColumnInfo(name= "distance", typeAffinity = ColumnInfo.REAL, index = false)
     val distance: Distance? = null

@@ -8,8 +8,11 @@ import com.runningtechie.transparentrunning.model.WorkoutSession
 @Dao
 interface WorkoutSessionDao: BaseDao<WorkoutSession> {
 
-    @Query("SELECT * FROM WorkoutSession")
+    @Query("SELECT * FROM WorkoutSession ORDER BY date DESC")
     fun getAllWorkoutSessions(): LiveData<List<WorkoutSession>>
+
+    @Query("SELECT * FROM WorkoutSession")
+    fun getAllWorkoutSessionsAsync(): List<WorkoutSession>
 
     @Query("SELECT * FROM WorkoutSession WHERE id=(:id)")
     fun getWorkoutSession(id: Long): WorkoutSession

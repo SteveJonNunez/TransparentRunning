@@ -2,6 +2,7 @@ package com.runningtechie.transparentrunning.database
 
 import androidx.room.TypeConverter
 import com.runningtechie.transparentrunning.model.Distance
+import com.runningtechie.transparentrunning.model.Duration
 import com.runningtechie.transparentrunning.model.Speed
 import java.util.*
 
@@ -44,6 +45,18 @@ private constructor() {
         @JvmStatic
         fun toSpeed(metersPerSecond: Float?): Speed? {
             return metersPerSecond?.let { Speed(it) }
+        }
+
+        @TypeConverter
+        @JvmStatic
+        fun fromDuration(duration: Duration?): Long? {
+            return duration?.milliseconds
+        }
+
+        @TypeConverter
+        @JvmStatic
+        fun toDuration(metersPerSecond: Long?): Duration? {
+            return metersPerSecond?.let { Duration.ofMilliseconds(it) }
         }
     }
 }

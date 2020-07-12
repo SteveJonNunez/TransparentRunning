@@ -2,6 +2,7 @@ package com.runningtechie.transparentrunning
 
 import android.annotation.SuppressLint
 import android.location.Location
+import android.os.Build
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -9,9 +10,11 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.runningtechie.transparentrunning.database.TransparentRunningRepository
 import com.runningtechie.transparentrunning.model.Distance
+import com.runningtechie.transparentrunning.model.Duration
 import com.runningtechie.transparentrunning.model.LocationPoint
 import com.runningtechie.transparentrunning.model.Speed
 import java.util.*
+import kotlin.math.round
 
 class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundService: GPSForegroundService) {
     private var fusedLocationClient: FusedLocationProviderClient =
@@ -42,7 +45,17 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
 
     private var startTime: Long = 0L
     private var elapsedDistance: Float = 0.0F
-    private var previousLocation: Location? = null
+    private var previousLocationPoint: LocationPoint =
+        LocationPoint(
+            sessionId = 0,
+            time = Date(),
+            elapsedTime = Duration.ofMilliseconds(0),
+            roundedElapsedTime = Duration.ofMilliseconds(0),
+            latitude = 0.0,
+            longitude = 0.0,
+            elapsedDistance = Distance(0f),
+            isSimulated = true
+        )
 
     @SuppressLint("MissingPermission")
     fun startOngoingLocationUpdates() {
@@ -63,25 +76,49 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
         )
     }
 
-    private fun insertLocationPoint(location: Location) {
-        if (previousLocation != null)
-            elapsedDistance += location.distanceTo(previousLocation)
-        else
-            startTime = location.time
-
-        TransparentRunningRepository.insertLocationPoint(
-            LocationPoint(
-                sessionId = workoutSessionId,
-                time = Date(location.time),
-                elapsedTime = (location.time - startTime),
-                latitude = location.latitude,
-                longitude = location.longitude,
-                altitude = Distance(location.altitude.toFloat()),
-                speed = Speed(location.speed),
-                elapsedDistance = Distance(elapsedDistance)
+    private fun insertLocationPoint(currentLocation: Location) {
+        if (previousLocationPoint.id != null) {
+            val results = FloatArray(3)
+            Location.distanceBetween(
+                previousLocationPoint.latitude, previousLocationPoint.longitude,
+                currentLocation.latitude, currentLocation.longitude,
+                results
             )
+            elapsedDistance = results[0]
+        } else
+            startTime = currentLocation.time
+
+        val elapsedTime = Duration.ofMilliseconds(currentLocation.time - startTime)
+
+        val locationPoint = LocationPoint(
+            sessionId = workoutSessionId,
+            time = Date(currentLocation.time),
+            elapsedTime = elapsedTime,
+            roundedElapsedTime = Duration.ofMilliseconds(
+                (round(elapsedTime.milliseconds / MILLISECONDS_IN_SECONDS_DOUBLE)
+                        * MILLISECONDS_IN_SECONDS_INT).toLong()
+            ),
+            latitude = currentLocation.latitude,
+            longitude = currentLocation.longitude,
+            altitude = if (currentLocation.hasAltitude()) Distance(currentLocation.altitude.toFloat()) else null,
+            speed = if (currentLocation.hasSpeed()) Speed(currentLocation.speed) else null,
+            bearing = if (currentLocation.hasBearing()) currentLocation.bearing else null,
+            elapsedDistance = Distance(elapsedDistance),
+            horizontalAccuracy = if (currentLocation.hasAccuracy()) currentLocation.accuracy else null,
+            verticalAccuracy = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (currentLocation.hasVerticalAccuracy()) currentLocation.verticalAccuracyMeters else null
+            } else null,
+            speedAccuracy = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (currentLocation.hasSpeedAccuracy()) currentLocation.speedAccuracyMetersPerSecond else null
+            } else null,
+            bearingAccuracy = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (currentLocation.hasBearingAccuracy()) currentLocation.bearingAccuracyDegrees else null
+            } else null,
+            isSimulated = false
         )
-        previousLocation = location
+        TransparentRunningRepository.insertLocationPoint(locationPoint)
+
+        previousLocationPoint = locationPoint
     }
 
     private fun updateWorkoutSessionDurationAndTime() {
@@ -92,6 +129,7 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
         val locationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = INTERVAL_TIME
+        locationRequest.fastestInterval = FASTEST_INTERVAL_TIME
         return locationRequest
     }
 
@@ -103,7 +141,10 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
     }
 
     companion object {
-        private const val INTERVAL_TIME: Long = 10 * 1000
+        const val INTERVAL_TIME: Long = 5 * 1000
+        const val FASTEST_INTERVAL_TIME: Long = 1 * 1000
+        const val MILLISECONDS_IN_SECONDS_DOUBLE: Double = 1000.0
+        const val MILLISECONDS_IN_SECONDS_INT: Int = 1000
     }
 
 }
