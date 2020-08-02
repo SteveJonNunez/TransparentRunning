@@ -1,9 +1,12 @@
-package com.runningtechie.transparentrunning.model
+package com.runningtechy.database.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
+import com.runningtechy.core.model.Distance
+import com.runningtechy.core.model.Duration
+import com.runningtechy.core.model.Speed
 import java.util.*
 
 @Entity(

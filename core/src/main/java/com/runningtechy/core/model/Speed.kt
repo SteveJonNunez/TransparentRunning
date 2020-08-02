@@ -1,6 +1,6 @@
-package com.runningtechie.transparentrunning.model
+package com.runningtechy.core.model
 
-import com.runningtechie.transparentrunning.toFormattedString
+import com.runningtechy.core.utils.toFormattedString
 
 class Speed(val metersPerSecond: Float) {
     companion object {

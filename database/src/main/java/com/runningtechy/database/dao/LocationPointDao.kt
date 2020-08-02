@@ -1,9 +1,9 @@
-package com.runningtechie.transparentrunning.database.dao
+package com.runningtechy.database.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
-import com.runningtechie.transparentrunning.model.LocationPoint
+import com.runningtechy.database.model.LocationPoint
 
 @Dao
 interface LocationPointDao : BaseDao<LocationPoint> {

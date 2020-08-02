@@ -1,4 +1,4 @@
-package com.runningtechie.transparentrunning.database.dao
+package com.runningtechy.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete

@@ -1,7 +1,7 @@
 package com.runningtechie.transparentrunning
 
 import android.app.Application
-import com.runningtechie.transparentrunning.database.TransparentRunningRepository
+import com.runningtechy.database.TransparentRunningRepository
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 

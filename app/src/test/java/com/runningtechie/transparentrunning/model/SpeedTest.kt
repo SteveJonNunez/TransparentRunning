@@ -21,7 +21,7 @@ class SpeedTest {
     private val minutesPerKilometer = 16.666666f
     private val minutesPerKilometerString = "16.67"
 
-    private val speed = Speed(metersPerSecond)
+    private val speed = com.runningtechy.core.model.Speed(metersPerSecond)
 
     @Test
     fun `constructor param is accessible`() {

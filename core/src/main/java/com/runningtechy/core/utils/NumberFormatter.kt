@@ -1,4 +1,4 @@
-package com.runningtechie.transparentrunning
+package com.runningtechy.core.utils
 
 import java.text.NumberFormat
 

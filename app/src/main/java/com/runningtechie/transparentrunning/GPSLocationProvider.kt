@@ -8,11 +8,9 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
-import com.runningtechie.transparentrunning.database.TransparentRunningRepository
-import com.runningtechie.transparentrunning.model.Distance
-import com.runningtechie.transparentrunning.model.Duration
-import com.runningtechie.transparentrunning.model.LocationPoint
-import com.runningtechie.transparentrunning.model.Speed
+import com.runningtechy.core.model.Duration
+import com.runningtechy.database.TransparentRunningRepository
+import com.runningtechy.database.model.LocationPoint
 import java.util.*
 import kotlin.math.round
 
@@ -91,10 +89,12 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
             ),
             latitude = currentLocation.latitude,
             longitude = currentLocation.longitude,
-            altitude = if (currentLocation.hasAltitude()) Distance(currentLocation.altitude.toFloat()) else null,
-            speed = if (currentLocation.hasSpeed()) Speed(currentLocation.speed) else null,
+            altitude = if (currentLocation.hasAltitude()) com.runningtechy.core.model.Distance(
+                currentLocation.altitude.toFloat()
+            ) else null,
+            speed = if (currentLocation.hasSpeed()) com.runningtechy.core.model.Speed(currentLocation.speed) else null,
             bearing = if (currentLocation.hasBearing()) currentLocation.bearing else null,
-            elapsedDistance = Distance(elapsedDistance),
+            elapsedDistance = com.runningtechy.core.model.Distance(elapsedDistance),
             horizontalAccuracy = if (currentLocation.hasAccuracy()) currentLocation.accuracy else null,
             verticalAccuracy = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 if (currentLocation.hasVerticalAccuracy()) currentLocation.verticalAccuracyMeters else null

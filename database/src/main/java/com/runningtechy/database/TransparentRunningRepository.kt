@@ -1,14 +1,14 @@
-package com.runningtechie.transparentrunning.database
+package com.runningtechy.database
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.runningtechie.transparentrunning.database.dao.LocationPointDao
-import com.runningtechie.transparentrunning.database.dao.WorkoutSessionDao
-import com.runningtechie.transparentrunning.model.LocationPoint
-import com.runningtechie.transparentrunning.model.WorkoutSession
+import com.runningtechy.database.dao.LocationPointDao
+import com.runningtechy.database.dao.WorkoutSessionDao
+import com.runningtechy.database.model.LocationPoint
+import com.runningtechy.database.model.WorkoutSession
 
 private const val DATABASE_NAME = "transparent-running-database"
 
@@ -35,7 +35,7 @@ class TransparentRunningRepository private constructor() {
         private val MIGRATION_5_6 = object : Migration(5, 6) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE LocationPoint RENAME TO LocationPointTemp")
-                database.execSQL("CREATE TABLE IF NOT EXISTS `LocationPoint` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `sessionId` INTEGER NOT NULL, `time` INTEGER NOT NULL, `elapsedTime` INTEGER NOT NULL, `roundedElapsedTime` INTEGER NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `altitude` REAL NULL, `speed` REAL NULL, `bearing` REAL NULL, `elapsedDistance` REAL NOT NULL, `horizontalAccuracy` REAL NULL, `verticalAccuracy` REAL NULL, `speedAccuracy` REAL NULL, `bearingAccuracy` REAL NULL, `isSimulated` INTEGER NOT NULL, FOREIGN KEY(`sessionId`) REFERENCES `WorkoutSession`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                database.execSQL("CREATE TABLE IF NOT EXISTS `LocationPoint` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `sessionId` INTEGER NOT NULL, `time` INTEGER NOT NULL, `elapsedTime` INTEGER NOT NULL, `roundedElapsedTime` INTEGER NOT NULL, `latitude` REAL NOT NULL, `longitude` REAL NOT NULL, `altitude` REAL, `speed` REAL, `bearing` REAL, `elapsedDistance` REAL NOT NULL, `horizontalAccuracy` REAL, `verticalAccuracy` REAL, `speedAccuracy` REAL, `bearingAccuracy` REAL, `isSimulated` INTEGER NOT NULL, FOREIGN KEY(`sessionId`) REFERENCES `WorkoutSession`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )")
                 database.execSQL("INSERT INTO LocationPoint(`id`, `sessionId`, `time`, `elapsedTime`, `roundedElapsedTime`, `latitude`, `longitude`, `altitude`, `speed`, `elapsedDistance`, `isSimulated` ) SELECT `id`, `sessionId`, `time`, `elapsedTime`, `roundedElapsedTime`, `latitude`, `longitude`, `altitude`, `speed`, `elapsedDistance`, `isSimulated`  FROM LocationPointTemp")
                 database.execSQL("DROP TABLE LocationPointTemp")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_LocationPoint_sessionId` ON `LocationPoint` (`sessionId`)")

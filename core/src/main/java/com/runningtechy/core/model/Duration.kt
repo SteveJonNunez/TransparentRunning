@@ -1,4 +1,4 @@
-package com.runningtechie.transparentrunning.model
+package com.runningtechy.core.model
 
 class Duration private constructor(val milliseconds: Long) {
     companion object {

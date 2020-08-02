@@ -16,7 +16,7 @@ class DistanceTest {
     private val miles = .0074564517f
     private val milesString = "0.01"
 
-    private val distance = Distance(meters)
+    private val distance = com.runningtechy.core.model.Distance(meters)
 
 
     @Test

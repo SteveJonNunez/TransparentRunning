@@ -1,9 +1,9 @@
-package com.runningtechie.transparentrunning.database
+package com.runningtechy.database
 
 import androidx.room.TypeConverter
-import com.runningtechie.transparentrunning.model.Distance
-import com.runningtechie.transparentrunning.model.Duration
-import com.runningtechie.transparentrunning.model.Speed
+import com.runningtechy.core.model.Distance
+import com.runningtechy.core.model.Duration
+import com.runningtechy.core.model.Speed
 import java.util.*
 
 class TransparentRunningConverters

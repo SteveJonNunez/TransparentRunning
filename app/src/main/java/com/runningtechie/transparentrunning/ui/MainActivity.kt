@@ -11,8 +11,8 @@ import com.runningtechie.transparentrunning.GPSForegroundService
 import com.runningtechie.transparentrunning.PermissionTool
 import com.runningtechie.transparentrunning.R
 import com.runningtechie.transparentrunning.customView.DataPoint
-import com.runningtechie.transparentrunning.database.TransparentRunningRepository
-import com.runningtechie.transparentrunning.model.WorkoutSession
+import com.runningtechy.database.TransparentRunningRepository
+import com.runningtechy.database.model.WorkoutSession
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 

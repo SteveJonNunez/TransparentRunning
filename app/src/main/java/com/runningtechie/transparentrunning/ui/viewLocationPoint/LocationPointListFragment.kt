@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.runningtechie.transparentrunning.R
-import com.runningtechie.transparentrunning.model.LocationPoint
+import com.runningtechy.database.model.LocationPoint
 import kotlinx.android.synthetic.main.fragment_recycler_view_list.*
 
 class LocationPointListFragment : Fragment() {
