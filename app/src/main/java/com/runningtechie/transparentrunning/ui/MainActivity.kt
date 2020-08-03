@@ -7,10 +7,11 @@ import android.os.HandlerThread
 import android.os.Looper
 import android.os.Message
 import androidx.appcompat.app.AppCompatActivity
-import com.runningtechie.transparentrunning.GPSForegroundService
+import androidx.core.content.ContextCompat
 import com.runningtechie.transparentrunning.PermissionTool
 import com.runningtechie.transparentrunning.R
-import com.runningtechie.transparentrunning.customView.DataPoint
+import com.runningtechy.core.util.Activities
+import com.runningtechy.core.util.intentTo
 import com.runningtechy.database.TransparentRunningRepository
 import com.runningtechy.database.model.WorkoutSession
 import kotlinx.android.synthetic.main.activity_main.*
@@ -38,19 +39,19 @@ class MainActivity : AppCompatActivity() {
         setupStopButton()
         setupViewWorkoutsButton()
 
-        val dataSet = mutableListOf<DataPoint>()
+        val dataSet = mutableListOf<com.runningtechy.graphview.DataPoint>()
 
-        dataSet.add(DataPoint(0,1))
-        dataSet.add(DataPoint(1,1))
-        dataSet.add(DataPoint(2,2))
-        dataSet.add(DataPoint(3,1))
-        dataSet.add(DataPoint(4,4))
-        dataSet.add(DataPoint(5,4))
-        dataSet.add(DataPoint(6,2))
-        dataSet.add(DataPoint(7,4))
-        dataSet.add(DataPoint(8,5))
-        dataSet.add(DataPoint(9,1))
-        dataSet.add(DataPoint(10,5))
+        dataSet.add(com.runningtechy.graphview.DataPoint(0, 1))
+        dataSet.add(com.runningtechy.graphview.DataPoint(1, 1))
+        dataSet.add(com.runningtechy.graphview.DataPoint(2, 2))
+        dataSet.add(com.runningtechy.graphview.DataPoint(3, 1))
+        dataSet.add(com.runningtechy.graphview.DataPoint(4, 4))
+        dataSet.add(com.runningtechy.graphview.DataPoint(5, 4))
+        dataSet.add(com.runningtechy.graphview.DataPoint(6, 2))
+        dataSet.add(com.runningtechy.graphview.DataPoint(7, 4))
+        dataSet.add(com.runningtechy.graphview.DataPoint(8, 5))
+        dataSet.add(com.runningtechy.graphview.DataPoint(9, 1))
+        dataSet.add(com.runningtechy.graphview.DataPoint(10, 5))
 
         graph_view.test(dataSet)
     }
@@ -71,9 +72,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupStopButton() {
         stopButton.setOnClickListener {
-            GPSForegroundService.stopGpsForegroundService(
-                this
-            )
+            val intent = intentTo(Activities.GPSForegroundService, "ACTION_STOP_FOREGROUND_SERVICE", this@MainActivity)
+            ContextCompat.startForegroundService(this@MainActivity, intent)
         }
     }
 
@@ -99,10 +99,11 @@ class MainActivity : AppCompatActivity() {
                 super.handleMessage(message)
                 if (message != null) {
                     when (message.what) {
-                        WORKOUT_SESSION_CREATED -> GPSForegroundService.startGpsForegroundService(
-                            this@MainActivity,
-                            message.obj as Long
-                        )
+                        WORKOUT_SESSION_CREATED -> {
+                            val intent = intentTo(Activities.GPSForegroundService, "ACTION_START_FOREGROUND_SERVICE", this@MainActivity)
+                            intent.putExtra("WORKOUT_SESSION_ID_KEY", message.obj as Long)
+                            ContextCompat.startForegroundService(this@MainActivity, intent)
+                        }
                     }
                 }
             }

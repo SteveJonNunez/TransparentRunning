@@ -26,4 +26,5 @@
     <string name="speed_accuracy">Speed Accuracy:</string>
     <string name="bearing_accuracy">Bearing Accuracy:</string>
     <string name="bearing_text">Bearing:</string>
+    <string name="title_gpsforegroundservice">GPS Foreground Service</string>
 </resources>

@@ -1,6 +1,6 @@
 package com.runningtechy.core.model
 
-import com.runningtechy.core.utils.toFormattedString
+import com.runningtechy.core.util.toFormattedString
 
 class Distance(val meters: Float) {
     companion object {

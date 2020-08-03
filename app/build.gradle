@@ -30,6 +30,7 @@ android {
         lintConfig file('lint.xml')
         warningsAsErrors true
     }
+    dynamicFeatures = [':gpsForegroundService']
 
 }
 
@@ -70,4 +71,5 @@ dependencies {
 
     implementation project(':database')
     implementation project(':core')
+    implementation project(':graphView')
 }

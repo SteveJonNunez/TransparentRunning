@@ -20,8 +20,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <service android:name=".GPSForegroundService" />
-
         <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

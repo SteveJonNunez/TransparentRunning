@@ -1,4 +1,4 @@
-package com.runningtechie.transparentrunning
+package com.runningtechy.gpsForegroundService
 
 import android.annotation.SuppressLint
 import android.location.Location
@@ -8,13 +8,14 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.runningtechie.transparentrunning.BackgroundHandler
 import com.runningtechy.core.model.Duration
 import com.runningtechy.database.TransparentRunningRepository
 import com.runningtechy.database.model.LocationPoint
 import java.util.*
 import kotlin.math.round
 
-class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundService: GPSForegroundService) {
+class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundService: com.runningtechy.gpsForegroundService.GPSForegroundService) {
     private var fusedLocationClient: FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(gpsForegroundService)
 
@@ -39,7 +40,8 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
     private var ongoingLocationRequest: LocationRequest = createOngoingLocationRequest()
     private var singleLocationRequest: LocationRequest = createSingleLocationRequest()
 
-    private var backgroundHandler: BackgroundHandler = BackgroundHandler("GPSLocationProvider")
+    private var backgroundHandler: BackgroundHandler =
+        BackgroundHandler("GPSLocationProvider")
 
     private var startTime: Long = 0L
     private var elapsedDistance: Float = 0.0F
@@ -119,8 +121,10 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
     private fun createOngoingLocationRequest(): LocationRequest {
         val locationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationRequest.interval = INTERVAL_TIME
-        locationRequest.fastestInterval = FASTEST_INTERVAL_TIME
+        locationRequest.interval =
+            INTERVAL_TIME
+        locationRequest.fastestInterval =
+            FASTEST_INTERVAL_TIME
         return locationRequest
     }
 

@@ -1,4 +1,4 @@
-package com.runningtechie.transparentrunning
+package com.runningtechy.gpsForegroundService
 
 import android.annotation.SuppressLint
 import android.app.Notification
@@ -101,7 +101,8 @@ class GPSForegroundService : Service() {
     @SuppressLint("RestrictedApi")
     private fun startForegroundService(workoutSessionId: Long) {
         this.workoutSessionId = workoutSessionId
-        gpsLocationProvider = GPSLocationProvider(workoutSessionId, this)
+        gpsLocationProvider =
+            GPSLocationProvider(workoutSessionId, this)
         setupOngoingNotification()
         gpsLocationProvider.startOngoingLocationUpdates()
         startForeground(CHANNEL_ID_INT, notificationBuilder.build())
@@ -131,7 +132,8 @@ class GPSForegroundService : Service() {
 
         // Add Pause button intent in notification.
         val pauseIntent = Intent(this, GPSForegroundService::class.java)
-        pauseIntent.action = ACTION_PAUSE_GPS_FOREGROUND_SERVICE
+        pauseIntent.action =
+            ACTION_PAUSE_GPS_FOREGROUND_SERVICE
         val pendingPauseIntent = PendingIntent.getService(this, 0, pauseIntent, 0)
         val pauseAction =
             NotificationCompat.Action(android.R.drawable.ic_media_play, "Pause", pendingPauseIntent)
@@ -139,7 +141,8 @@ class GPSForegroundService : Service() {
 
         // Add Finish button intent in notification.
         val finishIntent = Intent(this, GPSForegroundService::class.java)
-        finishIntent.action = ACTION_FINISH_GPS_FOREGROUND_SERVICE
+        finishIntent.action =
+            ACTION_FINISH_GPS_FOREGROUND_SERVICE
         val pendingFinishIntent = PendingIntent.getService(this, 0, finishIntent, 0)
         val finishAction =
             NotificationCompat.Action(android.R.drawable.ic_media_pause, "Pause", pendingFinishIntent)
@@ -166,7 +169,8 @@ class GPSForegroundService : Service() {
     @SuppressLint("RestrictedApi")
     private fun changeNotificationButtonFromPlayToPause() {
         val pauseIntent = Intent(this, GPSForegroundService::class.java)
-        pauseIntent.action = ACTION_PAUSE_GPS_FOREGROUND_SERVICE
+        pauseIntent.action =
+            ACTION_PAUSE_GPS_FOREGROUND_SERVICE
         val pendingPauseIntent = PendingIntent.getService(this, 0, pauseIntent, 0)
         val pauseAction =
             NotificationCompat.Action(android.R.drawable.ic_media_pause, "Pause", pendingPauseIntent)

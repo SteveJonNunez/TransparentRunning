@@ -1,4 +1,4 @@
-package com.runningtechy.core.utils
+package com.runningtechy.core.util
 
 import java.text.NumberFormat
 

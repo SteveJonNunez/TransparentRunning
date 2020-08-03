@@ -1,3 +1,5 @@
+include ':gpsForegroundService'
+include ':graphView'
 include ':core'
 include ':database'
 rootProject.name='TransparentRunning'

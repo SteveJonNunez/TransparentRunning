@@ -1,4 +1,4 @@
-package com.runningtechie.transparentrunning.customView
+package com.runningtechy.graphview
 
 import android.content.Context
 import android.graphics.Canvas

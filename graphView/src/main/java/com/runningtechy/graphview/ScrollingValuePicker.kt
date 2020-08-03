@@ -1,4 +1,4 @@
-package com.runningtechie.transparentrunning.customView
+package com.runningtechy.graphview
 
 import android.content.Context
 import android.util.AttributeSet
@@ -11,16 +11,17 @@ import android.widget.TextView
 class ScrollingValuePicker(context: Context, attributeSet: AttributeSet) : FrameLayout(context, attributeSet) {
     private var leftSpacer: View
     private var rightSpacer: View
-    private var scrollView: ObservableHorizontalScrollView = ObservableHorizontalScrollView(context, attributeSet)
+    private var scrollView: com.runningtechy.graphview.ObservableHorizontalScrollView =
+        com.runningtechy.graphview.ObservableHorizontalScrollView(context, attributeSet)
     private var scrollPositionTextView: TextView = TextView(context)
-    private var graphView: LineGraphView
+    private var graphView: com.runningtechy.graphview.LineGraphView
 
     init {
-        graphView = LineGraphView(context)
+        graphView = com.runningtechy.graphview.LineGraphView(context)
 
-        scrollView.setOnScrollChangedListener(object: ObservableHorizontalScrollView.OnScrollChangedListener {
+        scrollView.setOnScrollChangedListener(object: com.runningtechy.graphview.ObservableHorizontalScrollView.OnScrollChangedListener {
             override fun onScrollChanged(
-                view: ObservableHorizontalScrollView?,
+                view: com.runningtechy.graphview.ObservableHorizontalScrollView?,
                 horizontalScrollOrigin: Int,
                 verticalScrollOrigin: Int
             ) {
@@ -61,7 +62,7 @@ class ScrollingValuePicker(context: Context, attributeSet: AttributeSet) : Frame
         parentContainer.addView(scrollPositionTextView)
     }
 
-    fun test(datapoints: List<DataPoint>) {
+    fun test(datapoints: List<com.runningtechy.graphview.DataPoint>) {
         graphView.setData(datapoints)
     }
 
