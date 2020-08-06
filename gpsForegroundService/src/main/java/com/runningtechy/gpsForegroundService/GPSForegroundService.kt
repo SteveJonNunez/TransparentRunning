@@ -14,7 +14,6 @@ import android.os.IBinder
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
 import com.runningtechie.transparentrunning.ui.MainActivity
 
 const val CHANNEL_ID_STRING = "GPS_FOREGROUND_SERVICE"
@@ -29,21 +28,6 @@ const val WORKOUT_SESSION_ID_KEY = "WORKOUT_SESSION_ID_KEY"
 
 
 class GPSForegroundService : Service() {
-    companion object {
-        fun stopGpsForegroundService(context: Context) {
-            val intent = Intent(context, GPSForegroundService::class.java)
-            intent.action = ACTION_STOP_GPS_FOREGROUND_SERVICE
-            ContextCompat.startForegroundService(context, intent)
-        }
-
-        fun startGpsForegroundService(context: Context, workoutSessionId: Long) {
-            val intent = Intent(context, GPSForegroundService::class.java)
-            intent.action = ACTION_START_GPS_FOREGROUND_SERVICE
-            intent.putExtra(WORKOUT_SESSION_ID_KEY, workoutSessionId)
-            ContextCompat.startForegroundService(context, intent)
-        }
-    }
-
     private lateinit var gpsLocationProvider: GPSLocationProvider
 
     private lateinit var notificationBuilder: NotificationCompat.Builder

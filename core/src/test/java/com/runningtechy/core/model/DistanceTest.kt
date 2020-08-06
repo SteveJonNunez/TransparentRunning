@@ -1,4 +1,4 @@
-package com.runningtechie.transparentrunning.model
+package com.runningtechy.core.model
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -16,7 +16,7 @@ class DistanceTest {
     private val miles = .0074564517f
     private val milesString = "0.01"
 
-    private val distance = com.runningtechy.core.model.Distance(meters)
+    private val distance = Distance(meters)
 
 
     @Test
