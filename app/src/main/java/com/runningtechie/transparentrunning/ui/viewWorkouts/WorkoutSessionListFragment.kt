@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.runningtechie.transparentrunning.R
+import com.runningtechy.core.model.Speed
 import com.runningtechy.database.model.WorkoutSession
 import kotlinx.android.synthetic.main.fragment_recycler_view_list.*
 
@@ -78,6 +79,7 @@ class WorkoutSessionListFragment : Fragment() {
         private val dateTextView: TextView = itemView.findViewById(R.id.workoutSessionDateTextView)
         private val durationTextView: TextView = itemView.findViewById(R.id.workoutSessionDurationTextView)
         private val distanceTextView: TextView = itemView.findViewById(R.id.workoutSessionDistanceTextView)
+        private val workoutSessionPaceTextView: TextView = itemView.findViewById(R.id.workoutSessionPaceTextView)
 
         init {
             itemView.setOnClickListener(this)
@@ -90,6 +92,12 @@ class WorkoutSessionListFragment : Fragment() {
             dateTextView.text = workoutSession.date.toString()
             durationTextView.text = workoutSession.duration?.toString()
             distanceTextView.text = resources.getString(R.string.miles, workoutSession.distance?.miles)
+            val pace = workoutSession.duration?.seconds?.let { workoutSession.distance?.meters?.let { it1 ->
+                Speed.ofDurationInSecondsAndDistanceInMeters(it,
+                    it1
+                ).minutesPerMileString
+            } }
+            workoutSessionPaceTextView.text = pace.toString()
         }
 
         override fun onClick(v: View?) {

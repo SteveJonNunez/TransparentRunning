@@ -44,7 +44,7 @@ private constructor() {
         @TypeConverter
         @JvmStatic
         fun toSpeed(metersPerSecond: Float?): Speed? {
-            return metersPerSecond?.let { Speed(it) }
+            return metersPerSecond?.let { Speed.ofMetersPerSecond(it) }
         }
 
         @TypeConverter

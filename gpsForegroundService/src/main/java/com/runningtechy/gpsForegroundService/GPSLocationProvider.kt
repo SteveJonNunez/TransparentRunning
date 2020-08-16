@@ -94,7 +94,7 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
             latitude = currentLocation.latitude,
             longitude = currentLocation.longitude,
             altitude = if (currentLocation.hasAltitude()) Distance(currentLocation.altitude.toFloat()) else null,
-            speed = if (currentLocation.hasSpeed()) Speed(currentLocation.speed) else null,
+            speed = if (currentLocation.hasSpeed()) Speed.ofMetersPerSecond(currentLocation.speed) else null,
             bearing = if (currentLocation.hasBearing()) currentLocation.bearing else null,
             elapsedDistance = Distance(elapsedDistance),
             horizontalAccuracy = if (currentLocation.hasAccuracy()) currentLocation.accuracy else null,

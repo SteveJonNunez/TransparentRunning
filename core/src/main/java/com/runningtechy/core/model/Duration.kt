@@ -10,7 +10,10 @@ class Duration private constructor(val milliseconds: Long) {
 
 
         fun ofMilliseconds(milliseconds: Long) = Duration(milliseconds)
+        fun ofMinutes(minutes: Double) = Duration((minutes * SECONDS_IN_A_MINUTE * MILLISECONDS_IN_A_SECOND).toLong())
     }
+
+    val seconds by lazy { milliseconds / MILLISECONDS_IN_A_SECOND }
 
     override fun toString(): String {
         var hoursString = ""

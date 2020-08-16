@@ -4,15 +4,15 @@ import com.runningtechy.core.util.toFormattedString
 
 class Distance(val meters: Float) {
     companion object {
-        const val meterToMile = 0.000621371f
-        const val meterToFeet = 0.3048f
-        const val meterToKilometer = 0.001f
-        const val meterToYard = 1.093613298f
+        const val meterInAMile = 0.000621371f
+        const val meterInAFeet = 0.3048f
+        const val meterInAKilometer = 0.001f
+        const val meterInAYard = 1.093613298f
     }
-    val miles by lazy { meters * meterToMile }
-    val feet by lazy { meters / meterToFeet }
-    val kilometers by lazy { meters * meterToKilometer }
-    val yards by lazy { meters * meterToYard }
+    val miles by lazy { meters * meterInAMile }
+    val feet by lazy { meters / meterInAFeet }
+    val kilometers by lazy { meters * meterInAKilometer }
+    val yards by lazy { meters * meterInAYard }
 
     val metersString: String by lazy { meters.toFormattedString() }
     val milesString: String by lazy { miles.toFormattedString() }
