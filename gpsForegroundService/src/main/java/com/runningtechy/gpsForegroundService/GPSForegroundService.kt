@@ -37,12 +37,12 @@ class GPSForegroundService : Service() {
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         when (intent.action) {
-            ACTION_START_GPS_FOREGROUND_SERVICE -> startForegroundService(
-                intent.getLongExtra(
-                    WORKOUT_SESSION_ID_KEY,
-                    0L
-                )
-            )
+            ACTION_START_GPS_FOREGROUND_SERVICE -> {
+                if (intent.hasExtra(WORKOUT_SESSION_ID_KEY))
+                    startForegroundService(intent.getLongExtra(WORKOUT_SESSION_ID_KEY, 0L))
+                else
+                    throw RuntimeException() //TODO: Give user error instead of throwing exception
+            }
             ACTION_STOP_GPS_FOREGROUND_SERVICE -> stopForegroundService()
             ACTION_PLAY_GPS_FOREGROUND_SERVICE -> play()
             ACTION_PAUSE_GPS_FOREGROUND_SERVICE -> pause()

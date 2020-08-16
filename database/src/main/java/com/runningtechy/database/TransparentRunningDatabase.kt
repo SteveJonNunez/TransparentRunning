@@ -8,7 +8,7 @@ import com.runningtechy.database.dao.WorkoutSessionDao
 import com.runningtechy.database.model.LocationPoint
 import com.runningtechy.database.model.WorkoutSession
 
-@Database(entities = [WorkoutSession::class, LocationPoint::class], version = 6)
+@Database(entities = [WorkoutSession::class, LocationPoint::class], version = 9)
 @TypeConverters(TransparentRunningConverters::class)
 abstract class TransparentRunningDatabase : RoomDatabase() {
 

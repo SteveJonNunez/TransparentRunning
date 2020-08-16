@@ -9,13 +9,15 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.runningtechie.transparentrunning.BackgroundHandler
+import com.runningtechy.core.model.Distance
 import com.runningtechy.core.model.Duration
+import com.runningtechy.core.model.Speed
 import com.runningtechy.database.TransparentRunningRepository
 import com.runningtechy.database.model.LocationPoint
 import java.util.*
 import kotlin.math.round
 
-class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundService: com.runningtechy.gpsForegroundService.GPSForegroundService) {
+class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundService: GPSForegroundService) {
     private var fusedLocationClient: FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(gpsForegroundService)
 
@@ -75,7 +77,7 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
                 currentLocation.latitude, currentLocation.longitude,
                 results
             )
-            elapsedDistance = results[0]
+            elapsedDistance += results[0]
         } else
             startTime = currentLocation.time
 
@@ -91,12 +93,10 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
             ),
             latitude = currentLocation.latitude,
             longitude = currentLocation.longitude,
-            altitude = if (currentLocation.hasAltitude()) com.runningtechy.core.model.Distance(
-                currentLocation.altitude.toFloat()
-            ) else null,
-            speed = if (currentLocation.hasSpeed()) com.runningtechy.core.model.Speed(currentLocation.speed) else null,
+            altitude = if (currentLocation.hasAltitude()) Distance(currentLocation.altitude.toFloat()) else null,
+            speed = if (currentLocation.hasSpeed()) Speed(currentLocation.speed) else null,
             bearing = if (currentLocation.hasBearing()) currentLocation.bearing else null,
-            elapsedDistance = com.runningtechy.core.model.Distance(elapsedDistance),
+            elapsedDistance = Distance(elapsedDistance),
             horizontalAccuracy = if (currentLocation.hasAccuracy()) currentLocation.accuracy else null,
             verticalAccuracy = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 if (currentLocation.hasVerticalAccuracy()) currentLocation.verticalAccuracyMeters else null
@@ -121,10 +121,8 @@ class GPSLocationProvider(private var workoutSessionId: Long, gpsForegroundServi
     private fun createOngoingLocationRequest(): LocationRequest {
         val locationRequest = LocationRequest.create()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        locationRequest.interval =
-            INTERVAL_TIME
-        locationRequest.fastestInterval =
-            FASTEST_INTERVAL_TIME
+        locationRequest.interval = INTERVAL_TIME
+        locationRequest.fastestInterval = FASTEST_INTERVAL_TIME
         return locationRequest
     }
 

@@ -32,6 +32,48 @@ class TransparentRunningRepository private constructor() {
             locationPointDao = database.locationPointDao()
         }
 
+//        private val MIGRATION_8_9 = object : Migration(8, 9) {
+//            override fun migrate(database: SupportSQLiteDatabase) {
+//                for(id in 12..22) {
+//                    val locationPointCursor = database.query("SELECT * FROM LocationPoint WHERE sessionId = $id ORDER BY time ASC")
+//                    val latitudeColumnIndex = locationPointCursor.getColumnIndex("latitude")
+//                    val longitudeColumnIndex = locationPointCursor.getColumnIndex("longitude")
+//                    val locationPointIdColumnIndex = locationPointCursor.getColumnIndex("id")
+//                    val locationPointTimeColumnIndex = locationPointCursor.getColumnIndex("time")
+//                    locationPointCursor.moveToFirst()
+//                    var prevLat = locationPointCursor.getDouble(latitudeColumnIndex)
+//                    var prevLon = locationPointCursor.getDouble(longitudeColumnIndex)
+//                    var elapsedDistance = 0f
+//                    var startTime = locationPointCursor.getInt(locationPointTimeColumnIndex)
+//                    var elapsedTime = 0
+//                    while(locationPointCursor.moveToNext()) {
+//                        val results = FloatArray(3)
+//                        val currentLat = locationPointCursor.getDouble(latitudeColumnIndex)
+//                        val currentLon = locationPointCursor.getDouble(longitudeColumnIndex)
+//                        val currentLocationPointId = locationPointCursor.getDouble(locationPointIdColumnIndex)
+//                        val currentTime = locationPointCursor.getInt(locationPointTimeColumnIndex)
+//                        Location.distanceBetween(prevLat, prevLon, currentLat, currentLon, results)
+//                        elapsedDistance += results[0]
+//                        elapsedTime = currentTime - startTime
+//                        val roundedElapsedTime = (round(elapsedTime / 1000.0)
+//                                * 1000).toLong()
+//
+//                        database.execSQL("UPDATE LocationPoint SET elapsedDistance = $elapsedDistance WHERE id = $currentLocationPointId")
+//                        prevLat = currentLat
+//                        prevLon = currentLon
+//                        if(id == 12) {
+//                            database.execSQL("UPDATE LocationPoint SET elapsedTime = $elapsedTime WHERE id = $currentLocationPointId")
+//                            database.execSQL("UPDATE LocationPoint SET roundedElapsedTime = $roundedElapsedTime WHERE id = $currentLocationPointId")
+//                        }
+//                    }
+//                    database.execSQL("UPDATE WorkoutSession SET distance = $elapsedDistance WHERE id = $id")
+//                    if(id == 12) {
+//                        database.execSQL("UPDATE WorkoutSession SET duration = $elapsedTime WHERE id = $id")
+//                    }
+//                }
+//            }
+//        }
+
         private val MIGRATION_5_6 = object : Migration(5, 6) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("ALTER TABLE LocationPoint RENAME TO LocationPointTemp")
